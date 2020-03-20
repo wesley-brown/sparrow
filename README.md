@@ -1,6 +1,13 @@
 # Sparrow Server
 A web server for the Sparrow platform.
 
+## Prerequisites
+The following must be installed in order to run the Sparrow server:
+* Java JDK 8
+
+You must also make sure the JAVA_HOME environment variable is set to the 
+location of your Java JDK 8 installation.
+
 ## Setup
 Clone this repository into your desired directory. Import the pom.xml file 
 using your IDE of choice.

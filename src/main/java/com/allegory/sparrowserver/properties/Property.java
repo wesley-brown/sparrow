@@ -1,5 +1,7 @@
 package com.allegory.sparrowserver.properties;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * A real estate property.
  */
@@ -13,6 +15,11 @@ public final class Property {
      */
     public Property(final String address) {
         this.address = address;
+    }
+
+    @JsonProperty
+    public String address() {
+        return address;
     }
 
     @Override

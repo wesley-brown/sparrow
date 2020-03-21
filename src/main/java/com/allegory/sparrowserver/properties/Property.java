@@ -16,6 +16,20 @@ public final class Property {
     }
 
     @Override
+    public boolean equals(final Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Property)) {
+            return false;
+        }
+
+        final Property property = (Property) other;
+        return property.address.equals(this.address);
+    }
+
+    @Override
     public int hashCode() {
         // Uses the Effective Java 3 Item 11 algorithm
         int result = address.hashCode();

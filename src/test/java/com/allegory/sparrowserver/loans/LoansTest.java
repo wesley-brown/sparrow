@@ -40,8 +40,10 @@ public final class LoansTest {
         final List<LoanOfficer> initialLoanOfficers = new ArrayList<>();
         initialLoanOfficers.add(loanOfficerOne);
         initialLoanOfficers.add(new LoanOfficer("Alice", 5));
+        final LoanOfficersService loanOfficersService =
+                new LoanOfficersService(initialLoanOfficers);
         final LoanOfficersController loanOfficersController =
-                new LoanOfficersController(initialLoanOfficers);
+                new LoanOfficersController(loanOfficersService);
         final List<LoanOfficer> receivedLoanOfficers =
                 loanOfficersController.loanOfficers();
         assertThat(receivedLoanOfficers).containsExactlyInAnyOrderElementsOf(

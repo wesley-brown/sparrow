@@ -1,7 +1,10 @@
 package com.allegory.sparrowserver.properties;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,5 +33,18 @@ public final class PropertiesTest {
     public void two_identical_properties_are_equal() {
         final Property propertyTwo = new Property("123 Main St");
         assertEquals(propertyOne, propertyTwo);
+    }
+
+    @Test
+    public void getting_all_messages_returns_all_messages() {
+        final List<Property> initialProperties = new ArrayList<>();
+        initialProperties.add(propertyOne);
+        initialProperties.add(new Property("345 First St"));
+        final PropertiesController propertiesController =
+                new PropertiesController(initialProperties);
+        final List<Property> receivedProperties =
+                propertiesController.properties();
+        assertThat(receivedProperties).containsExactlyInAnyOrderElementsOf(
+                initialProperties);
     }
 }

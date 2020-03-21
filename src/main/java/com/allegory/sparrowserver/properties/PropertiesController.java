@@ -6,19 +6,19 @@ import java.util.List;
  * A REST controller for a /properties endpoint.
  */
 public final class PropertiesController {
-    private final List<Property> properties;
+    private final PropertiesService propertiesService;
 
     /**
      * Create a new PropertiesController.
      *
-     * @param properties the initial properties the new PropertiesController
-     *                   will keep track of.
+     * @param propertiesService the PropertiesService the new
+     *                          PropertiesController will use.
      */
-    public PropertiesController(final List<Property> properties) {
-        this.properties = properties;
+    public PropertiesController(final PropertiesService propertiesService) {
+        this.propertiesService = propertiesService;
     }
 
     public List<Property> properties() {
-        return properties;
+        return propertiesService.properties();
     }
 }

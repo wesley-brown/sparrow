@@ -40,8 +40,11 @@ public final class PropertiesTest {
         final List<Property> initialProperties = new ArrayList<>();
         initialProperties.add(propertyOne);
         initialProperties.add(new Property("345 First St"));
+
+        final PropertiesService propertiesService =
+                new PropertiesService(initialProperties);
         final PropertiesController propertiesController =
-                new PropertiesController(initialProperties);
+                new PropertiesController(propertiesService);
         final List<Property> receivedProperties =
                 propertiesController.properties();
         assertThat(receivedProperties).containsExactlyInAnyOrderElementsOf(

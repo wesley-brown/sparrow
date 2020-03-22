@@ -21,4 +21,23 @@ public final class Customer {
         int result = name.hashCode();
         return result;
     }
+
+    @Override
+    public boolean equals(final Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Customer)) {
+            return false;
+        }
+
+        final Customer customer = (Customer) other;
+        return customer.name.equals(this.name);
+    }
+
+    @Override
+    public String toString() {
+        return "<name=" + name + ">";
+    }
 }

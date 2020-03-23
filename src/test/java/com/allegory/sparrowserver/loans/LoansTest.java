@@ -14,34 +14,44 @@ import org.junit.jupiter.api.Test;
 
 public final class LoansTest {
 
-    private LoanOfficer loanOfficerOne;
+    private Customer bob;
+    private Property propertyBobWants;
+    private LoanOfficer paul;
+    private LoanApplication bobsLoanApplication;
 
     @BeforeEach
     public void setUp() {
-        loanOfficerOne = new LoanOfficer("Jimmy", 1);
+        bob = new Customer("Bob");
+        propertyBobWants = new Property("123 Main St");
+        paul = new LoanOfficer("Paul", 5);
+        bobsLoanApplication = new LoanApplication(
+                bob, propertyBobWants, paul);
     }
 
     @AfterEach
     public void tearDown() {
-        loanOfficerOne = null;
+        bob = null;
+        propertyBobWants = null;
+        paul = null;
+        bobsLoanApplication = null;
     }
 
     @Test
     public void two_identical_loan_officers_have_the_same_hash_code() {
-        final LoanOfficer loanOfficerTwo = new LoanOfficer("Jimmy", 1);
-        assertEquals(loanOfficerOne.hashCode(), loanOfficerTwo.hashCode());
+        final LoanOfficer paulsClone = new LoanOfficer("Paul", 5);
+        assertEquals(paul.hashCode(), paulsClone.hashCode());
     }
 
     @Test
     public void two_identical_loan_officer_are_equal() {
-        final LoanOfficer loanOfficerTwo = new LoanOfficer("Jimmy", 1);
-        assertEquals(loanOfficerOne, loanOfficerTwo);
+        final LoanOfficer paulsClone = new LoanOfficer("Paul", 5);
+        assertEquals(paul, paulsClone);
     }
 
     @Test
     public void getting_all_loan_officers_returns_all_loan_officers() {
         final List<LoanOfficer> initialLoanOfficers = new ArrayList<>();
-        initialLoanOfficers.add(loanOfficerOne);
+        initialLoanOfficers.add(paul);
         initialLoanOfficers.add(new LoanOfficer("Alice", 5));
         final LoanOfficersService loanOfficersService =
                 new LoanOfficersService(initialLoanOfficers);
@@ -55,14 +65,16 @@ public final class LoansTest {
 
     @Test
     public void two_identical_loan_applications_have_the_same_hash_codes() {
-        final Customer bob = new Customer("Bob");
-        final Property house = new Property("123 Main St");
-        final LoanOfficer paul = new LoanOfficer("Paul", 5);
-        final LoanApplication loanApplicationOne = new LoanApplication(
-                bob, house, paul);
-        final LoanApplication loanApplicationTwo = new LoanApplication(
-                bob, house, paul);
-        assertEquals(loanApplicationOne.hashCode(),
-                loanApplicationTwo.hashCode());
+        final LoanApplication bobsDuplicateLoanApplication =
+                new LoanApplication(bob, propertyBobWants, paul);
+        assertEquals(bobsLoanApplication.hashCode(),
+                bobsDuplicateLoanApplication.hashCode());
+    }
+
+    @Test
+    public void two_identical_loan_applications_should_be_equal() {
+        final LoanApplication bobsDuplicateLoanApplication =
+                new LoanApplication(bob, propertyBobWants, paul);
+        assertEquals(bobsLoanApplication, bobsDuplicateLoanApplication);
     }
 }

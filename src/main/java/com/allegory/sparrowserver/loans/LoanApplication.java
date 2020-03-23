@@ -35,4 +35,26 @@ public final class LoanApplication {
         result = 31 * result * loanOfficer.hashCode();
         return result;
     }
+
+    @Override
+    public boolean equals(final Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof LoanApplication)) {
+            return false;
+        }
+
+        final LoanApplication loanApplication = (LoanApplication) other;
+        return (loanApplication.buyer.equals(this.buyer))
+                && (loanApplication.property.equals(this.property))
+                && (loanApplication.loanOfficer.equals(this.loanOfficer));
+    }
+
+    @Override
+    public String toString() {
+        return "<buyer=" + buyer + ", property=" + property + ", loan officer="
+                + loanOfficer + ">";
+    }
 }

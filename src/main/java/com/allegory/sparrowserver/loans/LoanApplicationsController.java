@@ -2,11 +2,16 @@ package com.allegory.sparrowserver.loans;
 
 import com.allegory.sparrowserver.customers.Customer;
 import com.allegory.sparrowserver.properties.Property;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
  * A REST controller for loan applications endpoints.
  */
+@RestController
 final class LoanApplicationsController {
     private List<LoanApplication> loanApplications;
 
@@ -16,6 +21,7 @@ final class LoanApplicationsController {
      * @param loanApplications the loan applications the new loan applications
      *                         controller will initially know about.
      */
+    @Autowired
     LoanApplicationsController(final List<LoanApplication> loanApplications) {
         this.loanApplications = loanApplications;
     }
@@ -24,8 +30,9 @@ final class LoanApplicationsController {
         return loanApplications;
     }
 
+    @PostMapping("/api/v1/loan-applications")
     LoanApplication postLoanApplicationRequest(
-            final LoanApplicationPostRequest loanApplicationRequest) {
+            @RequestBody final LoanApplicationPostRequest loanApplicationRequest) {
         final Customer buyer = new Customer(loanApplicationRequest.buyer());
         final Property property =
                 new Property(loanApplicationRequest.propertyAddress());

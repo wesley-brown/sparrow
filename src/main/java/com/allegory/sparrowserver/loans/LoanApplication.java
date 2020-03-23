@@ -2,6 +2,7 @@ package com.allegory.sparrowserver.loans;
 
 import com.allegory.sparrowserver.customers.Customer;
 import com.allegory.sparrowserver.properties.Property;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * A loan application.
@@ -25,6 +26,21 @@ public final class LoanApplication {
         this.buyer = buyer;
         this.property = property;
         this.loanOfficer = loanOfficer;
+    }
+
+    @JsonProperty
+    public Customer buyer() {
+        return buyer;
+    }
+
+    @JsonProperty
+    public Property property() {
+        return property;
+    }
+
+    @JsonProperty
+    public LoanOfficer loanOfficer() {
+        return loanOfficer;
     }
 
     @Override

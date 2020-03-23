@@ -1,5 +1,7 @@
 package com.allegory.sparrowserver.customers;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * A customer.
  */
@@ -13,6 +15,11 @@ public final class Customer {
      */
     public Customer(final String name) {
         this.name = name;
+    }
+
+    @JsonProperty
+    public String name() {
+        return name;
     }
 
     @Override

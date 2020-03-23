@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.allegory.sparrowserver.customers.Customer;
+import com.allegory.sparrowserver.properties.Property;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,5 +51,18 @@ public final class LoansTest {
                 loanOfficersController.loanOfficers();
         assertThat(receivedLoanOfficers).containsExactlyInAnyOrderElementsOf(
                 initialLoanOfficers);
+    }
+
+    @Test
+    public void two_identical_loan_applications_have_the_same_hash_codes() {
+        final Customer bob = new Customer("Bob");
+        final Property house = new Property("123 Main St");
+        final LoanOfficer paul = new LoanOfficer("Paul", 5);
+        final LoanApplication loanApplicationOne = new LoanApplication(
+                bob, house, paul);
+        final LoanApplication loanApplicationTwo = new LoanApplication(
+                bob, house, paul);
+        assertEquals(loanApplicationOne.hashCode(),
+                loanApplicationTwo.hashCode());
     }
 }

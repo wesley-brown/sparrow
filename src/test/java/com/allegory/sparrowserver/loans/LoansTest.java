@@ -19,6 +19,9 @@ public final class LoansTest {
     private LoanOfficer paul;
     private LoanApplication bobsLoanApplication;
 
+    private List<LoanApplication> initialLoanApplications;
+    private LoanApplicationsController loanApplicationsController;
+
     @BeforeEach
     public void setUp() {
         bob = new Customer("Bob");
@@ -26,6 +29,15 @@ public final class LoansTest {
         paul = new LoanOfficer("Paul", 5);
         bobsLoanApplication = new LoanApplication(
                 bob, propertyBobWants, paul);
+        initialLoanApplications = new ArrayList<>();
+        initialLoanApplications.add(bobsLoanApplication);
+        initialLoanApplications.add(new LoanApplication(
+                new Customer("Jimmy"),
+                new Property("789 Oak Ave"),
+                paul
+        ));
+        loanApplicationsController =
+                new LoanApplicationsController(initialLoanApplications);
     }
 
     @AfterEach
@@ -34,6 +46,7 @@ public final class LoansTest {
         propertyBobWants = null;
         paul = null;
         bobsLoanApplication = null;
+        initialLoanApplications = null;
     }
 
     @Test
@@ -80,18 +93,26 @@ public final class LoansTest {
 
     @Test
     public void getting_all_loan_applications_returns_all_loan_applications() {
-        final List<LoanApplication> initialLoanApplications = new ArrayList<>();
-        initialLoanApplications.add(bobsLoanApplication);
-        final Customer alice = new Customer("Alice");
-        final Property apartmentAliceWants = new Property("456 Second St");
-        final LoanApplication alicesLoanApplication = new LoanApplication(
-                alice, apartmentAliceWants, paul);
-        initialLoanApplications.add(alicesLoanApplication);
-        final LoanApplicationsController loanApplicationsController =
-                new LoanApplicationsController(initialLoanApplications);
         final List<LoanApplication> allLoanApplications =
                 loanApplicationsController.loanApplications();
         assertThat(allLoanApplications).containsExactlyInAnyOrderElementsOf(
                 initialLoanApplications);
+    }
+
+    @Test
+    public void posting_a_valid_loan_application_request_returns_an_equivalent_loan_application() {
+        final String alicesName = "Alice";
+        final String addressOfApartmentAliceWants = "456 Second St";
+        final LoanApplicationPostRequest alicesLoanApplicationRequest =
+                new LoanApplicationPostRequest(
+                        alicesName, addressOfApartmentAliceWants);
+        final LoanApplication receivedLoanApplication =
+                loanApplicationsController.postLoanApplicationRequest(alicesLoanApplicationRequest);
+        final Customer alice = new Customer(alicesName);
+        final Property apartmentAliceWants =
+                new Property(addressOfApartmentAliceWants);
+        final LoanApplication alicesLoanApplication = new LoanApplication(
+                alice, apartmentAliceWants, paul);
+        assertEquals(alicesLoanApplication, receivedLoanApplication);
     }
 }

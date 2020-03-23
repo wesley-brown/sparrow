@@ -77,4 +77,21 @@ public final class LoansTest {
                 new LoanApplication(bob, propertyBobWants, paul);
         assertEquals(bobsLoanApplication, bobsDuplicateLoanApplication);
     }
+
+    @Test
+    public void getting_all_loan_applications_returns_all_loan_applications() {
+        final List<LoanApplication> initialLoanApplications = new ArrayList<>();
+        initialLoanApplications.add(bobsLoanApplication);
+        final Customer alice = new Customer("Alice");
+        final Property apartmentAliceWants = new Property("456 Second St");
+        final LoanApplication alicesLoanApplication = new LoanApplication(
+                alice, apartmentAliceWants, paul);
+        initialLoanApplications.add(alicesLoanApplication);
+        final LoanApplicationsController loanApplicationsController =
+                new LoanApplicationsController(initialLoanApplications);
+        final List<LoanApplication> allLoanApplications =
+                loanApplicationsController.loanApplications();
+        assertThat(allLoanApplications).containsExactlyInAnyOrderElementsOf(
+                initialLoanApplications);
+    }
 }

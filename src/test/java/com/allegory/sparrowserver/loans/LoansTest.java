@@ -19,6 +19,9 @@ public final class LoansTest {
     private LoanOfficer paul;
     private LoanApplication bobsLoanApplication;
 
+    private String alicesName;
+    private String addressOfApartmentAliceWants;
+
     private List<LoanApplication> initialLoanApplications;
     private LoanApplicationsController loanApplicationsController;
 
@@ -29,6 +32,10 @@ public final class LoansTest {
         paul = new LoanOfficer("Paul", 5);
         bobsLoanApplication = new LoanApplication(
                 bob, propertyBobWants, paul);
+
+        alicesName = "Alice";
+        addressOfApartmentAliceWants = "456 Second St";
+
         initialLoanApplications = new ArrayList<>();
         initialLoanApplications.add(bobsLoanApplication);
         initialLoanApplications.add(new LoanApplication(
@@ -45,6 +52,10 @@ public final class LoansTest {
         bob = null;
         propertyBobWants = null;
         paul = null;
+
+        alicesName = null;
+        addressOfApartmentAliceWants = null;
+
         bobsLoanApplication = null;
         initialLoanApplications = null;
     }
@@ -101,8 +112,6 @@ public final class LoansTest {
 
     @Test
     public void posting_a_valid_loan_application_request_returns_an_equivalent_loan_application() {
-        final String alicesName = "Alice";
-        final String addressOfApartmentAliceWants = "456 Second St";
         final LoanApplicationPostRequest alicesLoanApplicationRequest =
                 new LoanApplicationPostRequest(
                         alicesName, addressOfApartmentAliceWants);
@@ -114,5 +123,26 @@ public final class LoansTest {
         final LoanApplication alicesLoanApplication = new LoanApplication(
                 alice, apartmentAliceWants, paul);
         assertEquals(alicesLoanApplication, receivedLoanApplication);
+    }
+
+    @Test
+    public void two_identical_loan_application_post_responses_should_have_the_same_hash_codes() {
+        final String paulsName = "Paul";
+        final LoanApplicationPostResponse alicesLoanApplication = new
+            LoanApplicationPostResponse(
+                alicesName,
+                addressOfApartmentAliceWants,
+                paulsName
+            );
+        final LoanApplicationPostResponse alicesDuplicateLoanApplication = new
+            LoanApplicationPostResponse(
+                alicesName,
+                addressOfApartmentAliceWants,
+                paulsName
+            );
+        assertEquals(
+            alicesLoanApplication.hashCode(),
+            alicesDuplicateLoanApplication.hashCode()
+        );
     }
 }

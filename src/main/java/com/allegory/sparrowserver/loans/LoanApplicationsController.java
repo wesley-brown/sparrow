@@ -31,7 +31,7 @@ final class LoanApplicationsController {
     }
 
     @PostMapping("/api/v1/loan-applications")
-    LoanApplication postLoanApplicationRequest(
+    LoanApplicationPostResponse postLoanApplicationRequest(
             @RequestBody final LoanApplicationPostRequest loanApplicationRequest) {
         final Customer buyer = new Customer(loanApplicationRequest.buyer());
         final Property property =
@@ -39,6 +39,11 @@ final class LoanApplicationsController {
 
         // Currently a customer does not pick their own loan officer
         final LoanOfficer paul = new LoanOfficer("Paul", 5);
-        return buyer.applyForLoan(property, paul);
+        final LoanApplication loanApplication = buyer.applyForLoan(property, paul);
+        return new LoanApplicationPostResponse(
+            loanApplication.buyer().name(),
+            loanApplication.property().address(),
+            loanApplication.loanOfficer().name()
+        );
     }
 }

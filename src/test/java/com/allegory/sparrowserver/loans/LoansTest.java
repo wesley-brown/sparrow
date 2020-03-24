@@ -121,14 +121,18 @@ public final class LoansTest {
         final LoanApplicationPostRequest alicesLoanApplicationRequest =
                 new LoanApplicationPostRequest(
                         alicesName, addressOfApartmentAliceWants);
-        final LoanApplication receivedLoanApplication =
+        final LoanApplicationPostResponse receivedLoanApplication =
                 loanApplicationsController.postLoanApplicationRequest(alicesLoanApplicationRequest);
         final Customer alice = new Customer(alicesName);
         final Property apartmentAliceWants =
                 new Property(addressOfApartmentAliceWants);
-        final LoanApplication alicesLoanApplication = new LoanApplication(
-                alice, apartmentAliceWants, paul);
-        assertEquals(alicesLoanApplication, receivedLoanApplication);
+        final LoanApplicationPostResponse alicesExpectedLoanApplication = new
+            LoanApplicationPostResponse(
+                alicesName,
+                addressOfApartmentAliceWants,
+                paulsName
+            );
+        assertEquals(alicesExpectedLoanApplication, receivedLoanApplication);
     }
 
     @Test

@@ -1,5 +1,7 @@
 package com.allegory.sparrowserver.loans;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * POST response data for a REST endpoint used to apply for a loan.
  */
@@ -23,6 +25,21 @@ public final class LoanApplicationPostResponse {
         this.applicantName = applicantName;
         this.propertyAddress = propertyAddress;
         this.loanOfficerName = loanOfficerName;
+    }
+
+    @JsonProperty
+    public String applicantName() {
+        return applicantName;
+    }
+
+    @JsonProperty
+    public String propertyAddress() {
+        return propertyAddress;
+    }
+
+    @JsonProperty
+    public String loanOfficerName() {
+        return loanOfficerName;
     }
 
     @Override

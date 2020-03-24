@@ -39,8 +39,6 @@ final class LoanApplicationsController {
 
         // Currently a customer does not pick their own loan officer
         final LoanOfficer paul = new LoanOfficer("Paul", 5);
-        final LoanApplication loanApplication =
-                new LoanApplication(buyer, property, paul);
-        return loanApplication;
+        return buyer.applyForLoan(property, paul);
     }
 }

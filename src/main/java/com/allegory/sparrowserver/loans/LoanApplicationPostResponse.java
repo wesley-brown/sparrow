@@ -33,4 +33,28 @@ public final class LoanApplicationPostResponse {
         result = 31 * result * loanOfficerName.hashCode();
         return result;
     }
+
+    @Override
+    public boolean equals(final Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof LoanApplicationPostResponse)) {
+            return false;
+        }
+
+        final LoanApplicationPostResponse otherLoanAppResponse =
+            (LoanApplicationPostResponse) other;
+        return (otherLoanAppResponse.applicantName.equals(this.applicantName))
+            && (otherLoanAppResponse.propertyAddress.equals(this.propertyAddress))
+            && (otherLoanAppResponse.loanOfficerName.equals(this.loanOfficerName));
+    }
+
+    @Override
+    public String toString() {
+        return "<applicantName=" + applicantName + ", propertyAddress="
+                + propertyAddress + ", loanOfficerName=" + loanOfficerName
+                + ">";
+    }
 }

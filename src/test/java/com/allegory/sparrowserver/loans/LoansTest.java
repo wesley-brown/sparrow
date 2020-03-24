@@ -22,6 +22,8 @@ public final class LoansTest {
     private String alicesName;
     private String addressOfApartmentAliceWants;
 
+    private String paulsName;
+
     private List<LoanApplication> initialLoanApplications;
     private LoanApplicationsController loanApplicationsController;
 
@@ -35,6 +37,8 @@ public final class LoansTest {
 
         alicesName = "Alice";
         addressOfApartmentAliceWants = "456 Second St";
+
+        paulsName = "Paul";
 
         initialLoanApplications = new ArrayList<>();
         initialLoanApplications.add(bobsLoanApplication);
@@ -55,6 +59,8 @@ public final class LoansTest {
 
         alicesName = null;
         addressOfApartmentAliceWants = null;
+
+        paulsName = null;
 
         bobsLoanApplication = null;
         initialLoanApplications = null;
@@ -127,7 +133,6 @@ public final class LoansTest {
 
     @Test
     public void two_identical_loan_application_post_responses_should_have_the_same_hash_codes() {
-        final String paulsName = "Paul";
         final LoanApplicationPostResponse alicesLoanApplication = new
             LoanApplicationPostResponse(
                 alicesName,
@@ -144,5 +149,22 @@ public final class LoansTest {
             alicesLoanApplication.hashCode(),
             alicesDuplicateLoanApplication.hashCode()
         );
+    }
+
+    @Test
+    public void two_identical_loan_application_post_responses_are_equal() {
+        final LoanApplicationPostResponse alicesLoanApplication = new
+            LoanApplicationPostResponse(
+                alicesName,
+                addressOfApartmentAliceWants,
+                paulsName
+            );
+        final LoanApplicationPostResponse alicesDuplicateLoanApplication = new
+            LoanApplicationPostResponse(
+                alicesName,
+                addressOfApartmentAliceWants,
+                paulsName
+            );
+        assertEquals(alicesLoanApplication, alicesDuplicateLoanApplication);
     }
 }

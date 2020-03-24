@@ -2,33 +2,46 @@ package com.allegory.sparrowserver.customers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.allegory.sparrowserver.loans.LoanApplication;
+import com.allegory.sparrowserver.loans.LoanOfficer;
+import com.allegory.sparrowserver.properties.Property;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public final class CustomersTest {
-    private Customer customerOne;
-    private Customer customerTwo;
+    private Customer bob;
 
     @BeforeEach
     private void setUp() {
-        customerOne = new Customer("Bob");
-        customerTwo = new Customer("Bob");
+        bob = new Customer("Bob");
     }
 
     @AfterEach
     private void tearDown() {
-        customerOne = null;
-        customerTwo = null;
+        bob = null;
     }
 
     @Test
     public void two_identical_customers_have_the_same_hash_codes() {
-        assertEquals(customerOne.hashCode(), customerTwo.hashCode());
+        final Customer bobsClone = new Customer("Bob");
+        assertEquals(bob.hashCode(), bobsClone.hashCode());
     }
 
     @Test
     public void two_identical_customers_should_be_equal() {
-        assertEquals(customerOne, customerTwo);
+        final Customer bobsClone = new Customer("Bob");
+        assertEquals(bob, bobsClone);
+    }
+
+    @Test
+    public void a_customer_can_apply_for_a_loan() {
+        final LoanOfficer paul = new LoanOfficer("Paul", 5);
+        final Property houseBobWants = new Property("123 Main St");
+        final LoanApplication bobsActualLoanApplication =
+                bob.applyForLoan(houseBobWants, paul);
+        final LoanApplication bobsExpectedLoanApplication =
+                new LoanApplication(bob, houseBobWants, paul);
+        assertEquals(bobsExpectedLoanApplication, bobsActualLoanApplication);
     }
 }

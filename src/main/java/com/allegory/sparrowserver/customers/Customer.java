@@ -1,5 +1,8 @@
 package com.allegory.sparrowserver.customers;
 
+import com.allegory.sparrowserver.loans.LoanApplication;
+import com.allegory.sparrowserver.loans.LoanOfficer;
+import com.allegory.sparrowserver.properties.Property;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -27,6 +30,19 @@ public final class Customer {
         // Uses the Effective Java 3 Item 11 algorithm
         int result = name.hashCode();
         return result;
+    }
+
+    /**
+     * Apply for a property loan through a given loan officer.
+     *
+     * @param property    the property to apply for a loan for.
+     * @param loanOfficer the loan officer to apply for a loan through.
+     * @return the loan application applied for.
+     */
+    public LoanApplication applyForLoan(
+            final Property property,
+            final LoanOfficer loanOfficer) {
+        return new LoanApplication(this, property, loanOfficer);
     }
 
     @Override

@@ -12,15 +12,18 @@ import org.junit.jupiter.api.Test;
 public final class PropertiesTest {
 
     private Property propertyOne;
+    private GetPropertyResponse house;
 
     @BeforeEach
     public void setUp() {
         propertyOne = new Property("123 Main St");
+        house = new GetPropertyResponse("123 Main St");
     }
 
     @AfterEach
     public void tearDown() {
         propertyOne = null;
+        house = null;
     }
 
     @Test
@@ -37,11 +40,16 @@ public final class PropertiesTest {
 
     @Test
     public void two_identical_get_property_responses_have_the_same_hash_codes() {
-        final GetPropertyResponse house =
-                new GetPropertyResponse("345 First St");
         final GetPropertyResponse duplicateHouse =
-                new GetPropertyResponse("345 First St");
+                new GetPropertyResponse("123 Main St");
         assertEquals(house.hashCode(), duplicateHouse.hashCode());
+    }
+
+    @Test
+    public void two_identical_get_property_responses_are_equal() {
+        final GetPropertyResponse duplicateHouse =
+                new GetPropertyResponse("123 Main St");
+        assertEquals(house, duplicateHouse);
     }
 
     @Test

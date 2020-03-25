@@ -36,7 +36,7 @@ public final class PropertiesTest {
     }
 
     @Test
-    public void getting_all_messages_returns_all_messages() {
+    public void getting_all_properties_returns_all_properties() {
         final List<Property> initialProperties = new ArrayList<>();
         initialProperties.add(propertyOne);
         initialProperties.add(new Property("345 First St"));

@@ -1,5 +1,5 @@
-# Sparrow Server
-A web server for the Sparrow platform.
+# Sparrow
+Sparrow is a platform that guides people through the process of buying a home.
 
 ## Prerequisites
 The following must be installed in order to run the Sparrow server:

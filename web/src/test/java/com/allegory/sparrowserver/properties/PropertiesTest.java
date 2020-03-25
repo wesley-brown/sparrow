@@ -17,7 +17,7 @@ public final class PropertiesTest {
     @BeforeEach
     public void setUp() {
         propertyOne = new Property("123 Main St");
-        house = new GetPropertyResponse("123 Main St");
+        house = new GetPropertyResponse("456 Second St");
     }
 
     @AfterEach
@@ -41,14 +41,14 @@ public final class PropertiesTest {
     @Test
     public void two_identical_get_property_responses_have_the_same_hash_codes() {
         final GetPropertyResponse duplicateHouse =
-                new GetPropertyResponse("123 Main St");
+                new GetPropertyResponse("456 Second St");
         assertEquals(house.hashCode(), duplicateHouse.hashCode());
     }
 
     @Test
     public void two_identical_get_property_responses_are_equal() {
         final GetPropertyResponse duplicateHouse =
-                new GetPropertyResponse("123 Main St");
+                new GetPropertyResponse("456 Second St");
         assertEquals(house, duplicateHouse);
     }
 
@@ -56,15 +56,17 @@ public final class PropertiesTest {
     public void getting_all_properties_returns_all_properties() {
         final List<Property> initialProperties = new ArrayList<>();
         initialProperties.add(propertyOne);
-        initialProperties.add(new Property("345 First St"));
-
+        initialProperties.add(new Property("456 Second St"));
         final PropertiesService propertiesService =
                 new PropertiesService(initialProperties);
         final PropertiesController propertiesController =
                 new PropertiesController(propertiesService);
-        final List<Property> receivedProperties =
+        final List<GetPropertyResponse> receivedProperties =
                 propertiesController.properties();
+        final List<GetPropertyResponse> expectedProperties = new ArrayList<>();
+        expectedProperties.add(new GetPropertyResponse(propertyOne.address()));
+        expectedProperties.add(house);
         assertThat(receivedProperties).containsExactlyInAnyOrderElementsOf(
-                initialProperties);
+                expectedProperties);
     }
 }

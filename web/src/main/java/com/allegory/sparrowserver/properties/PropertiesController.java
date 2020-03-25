@@ -1,7 +1,7 @@
 package com.allegory.sparrowserver.properties;
 
+import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +25,12 @@ public final class PropertiesController {
     }
 
     @GetMapping("/api/v1/properties")
-    public List<Property> properties() {
-        return propertiesService.properties();
+    public List<GetPropertyResponse> properties() {
+        final List<Property> properties = propertiesService.properties();
+        final List<GetPropertyResponse> propertyResponses = new ArrayList<>();
+        for (final Property property : properties) {
+            propertyResponses.add(new GetPropertyResponse(property.address()));
+        }
+        return propertyResponses;
     }
 }

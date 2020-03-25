@@ -1,5 +1,7 @@
 package com.allegory.sparrowserver.properties;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Data for a response to a GET request for a property.
  */
@@ -13,6 +15,11 @@ public final class GetPropertyResponse {
      */
     public GetPropertyResponse(final String propertyAddress) {
         this.propertyAddress = propertyAddress;
+    }
+
+    @JsonProperty
+    public String propertyAddress() {
+        return propertyAddress;
     }
 
     @Override

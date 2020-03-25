@@ -3,11 +3,10 @@ package com.allegory.sparrowserver.loans;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.allegory.sparrow.domain.properties.Property;
+import com.allegory.sparrowserver.customers.Customer;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.allegory.sparrowserver.customers.Customer;
-import com.allegory.sparrowserver.properties.Property;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

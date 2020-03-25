@@ -1,8 +1,8 @@
 package com.allegory.sparrowserver.customers;
 
+import com.allegory.sparrow.domain.properties.Property;
 import com.allegory.sparrowserver.loans.LoanApplication;
 import com.allegory.sparrowserver.loans.LoanOfficer;
-import com.allegory.sparrowserver.properties.Property;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**

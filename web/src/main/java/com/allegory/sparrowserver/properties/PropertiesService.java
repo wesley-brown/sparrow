@@ -1,5 +1,6 @@
 package com.allegory.sparrowserver.properties;
 
+import com.allegory.sparrow.domain.properties.Property;
 import java.util.List;
 import org.springframework.stereotype.Service;
 

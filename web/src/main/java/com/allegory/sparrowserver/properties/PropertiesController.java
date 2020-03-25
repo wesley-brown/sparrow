@@ -1,5 +1,6 @@
 package com.allegory.sparrowserver.properties;
 
+import com.allegory.sparrow.domain.properties.Property;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

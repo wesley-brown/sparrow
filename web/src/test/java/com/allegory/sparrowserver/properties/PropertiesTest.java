@@ -3,6 +3,7 @@ package com.allegory.sparrowserver.properties;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.allegory.sparrow.domain.properties.Property;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
@@ -10,63 +11,48 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public final class PropertiesTest {
-
-    private Property propertyOne;
-    private GetPropertyResponse house;
+    private GetPropertyResponse houseJimmyWants;
+    private GetPropertyResponse houseSallyWants;
 
     @BeforeEach
     public void setUp() {
-        propertyOne = new Property("123 Main St");
-        house = new GetPropertyResponse("456 Second St");
+        houseJimmyWants = new GetPropertyResponse("123 Main St");
+        houseSallyWants = new GetPropertyResponse("123 Main St");
     }
 
     @AfterEach
     public void tearDown() {
-        propertyOne = null;
-        house = null;
-    }
-
-    @Test
-    public void two_identical_properties_have_the_same_hashcode() {
-        final Property propertyTwo = new Property("123 Main St");
-        assertEquals(propertyOne.hashCode(), propertyTwo.hashCode());
-    }
-
-    @Test
-    public void two_identical_properties_are_equal() {
-        final Property propertyTwo = new Property("123 Main St");
-        assertEquals(propertyOne, propertyTwo);
+        houseJimmyWants = null;
+        houseSallyWants = null;
     }
 
     @Test
     public void two_identical_get_property_responses_have_the_same_hash_codes() {
-        final GetPropertyResponse duplicateHouse =
-                new GetPropertyResponse("456 Second St");
-        assertEquals(house.hashCode(), duplicateHouse.hashCode());
+        assertEquals(houseJimmyWants.hashCode(), houseSallyWants.hashCode());
     }
 
     @Test
     public void two_identical_get_property_responses_are_equal() {
-        final GetPropertyResponse duplicateHouse =
-                new GetPropertyResponse("456 Second St");
-        assertEquals(house, duplicateHouse);
+        assertEquals(houseJimmyWants, houseSallyWants);
     }
 
     @Test
     public void getting_all_properties_returns_all_properties() {
         final List<Property> initialProperties = new ArrayList<>();
-        initialProperties.add(propertyOne);
+        initialProperties.add(new Property(houseJimmyWants.propertyAddress()));
         initialProperties.add(new Property("456 Second St"));
+
         final PropertiesService propertiesService =
                 new PropertiesService(initialProperties);
         final PropertiesController propertiesController =
                 new PropertiesController(propertiesService);
-        final List<GetPropertyResponse> receivedProperties =
+        final List<GetPropertyResponse> availableProperties =
                 propertiesController.properties();
+
         final List<GetPropertyResponse> expectedProperties = new ArrayList<>();
-        expectedProperties.add(new GetPropertyResponse(propertyOne.address()));
-        expectedProperties.add(house);
-        assertThat(receivedProperties).containsExactlyInAnyOrderElementsOf(
+        expectedProperties.add(houseJimmyWants);
+        expectedProperties.add(new GetPropertyResponse("456 Second St"));
+        assertThat(availableProperties).containsExactlyInAnyOrderElementsOf(
                 expectedProperties);
     }
 }

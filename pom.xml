@@ -15,6 +15,7 @@
 	</description>
 
 	<modules>
+		<module>domain</module>
 		<module>web</module>
 	</modules>
 

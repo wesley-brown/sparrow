@@ -2,9 +2,9 @@ package com.allegory.sparrowserver.customers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.allegory.sparrow.domain.properties.Property;
 import com.allegory.sparrowserver.loans.LoanApplication;
 import com.allegory.sparrowserver.loans.LoanOfficer;
-import com.allegory.sparrowserver.properties.Property;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

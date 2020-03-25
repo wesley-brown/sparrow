@@ -1,7 +1,7 @@
 package com.allegory.sparrowserver.loans;
 
+import com.allegory.sparrow.domain.properties.Property;
 import com.allegory.sparrowserver.customers.Customer;
-import com.allegory.sparrowserver.properties.Property;
 
 /**
  * A loan application.

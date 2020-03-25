@@ -36,6 +36,15 @@ public final class PropertiesTest {
     }
 
     @Test
+    public void two_identical_get_property_responses_have_the_same_hash_codes() {
+        final GetPropertyResponse house =
+                new GetPropertyResponse("345 First St");
+        final GetPropertyResponse duplicateHouse =
+                new GetPropertyResponse("345 First St");
+        assertEquals(house.hashCode(), duplicateHouse.hashCode());
+    }
+
+    @Test
     public void getting_all_properties_returns_all_properties() {
         final List<Property> initialProperties = new ArrayList<>();
         initialProperties.add(propertyOne);

@@ -3,6 +3,7 @@ package com.allegory.sparrowserver.loans;
 import com.allegory.sparrow.domain.customers.Customer;
 import com.allegory.sparrow.domain.loans.LoanOfficer;
 import com.allegory.sparrow.domain.properties.Property;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,8 +28,19 @@ final class LoanApplicationsController {
         this.loanApplications = loanApplications;
     }
 
-    List<LoanApplication> loanApplications() {
-        return loanApplications;
+    List<LoanApplicationResponse> loanApplications() {
+        final List<LoanApplicationResponse> loanApplicationResponses =
+                new ArrayList<>();
+        for (final LoanApplication loanApplication : loanApplications) {
+            final LoanApplicationResponse loanApplicationResponse =
+                    new LoanApplicationResponse(
+                            loanApplication.buyer().name(),
+                            loanApplication.property().address(),
+                            loanApplication.loanOfficer().name()
+                    );
+            loanApplicationResponses.add(loanApplicationResponse);
+        }
+        return loanApplicationResponses;
     }
 
     @PostMapping("/api/v1/loan-applications")

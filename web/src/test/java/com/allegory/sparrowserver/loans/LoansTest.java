@@ -119,10 +119,18 @@ public final class LoansTest {
 
     @Test
     public void getting_all_loan_applications_returns_all_loan_applications() {
-        final List<LoanApplication> allLoanApplications =
-                loanApplicationsController.loanApplications();
-        assertThat(allLoanApplications).containsExactlyInAnyOrderElementsOf(
-                initialLoanApplications);
+        final List<LoanApplicationResponse> expectedLoanApplications =
+            new ArrayList<>();
+        expectedLoanApplications.add(new LoanApplicationResponse(
+            "Bob", "123 Main St", "Paul"
+        ));
+        expectedLoanApplications.add(new LoanApplicationResponse(
+            "Jimmy", "789 Oak Ave", "Paul"
+        ));
+        final List<LoanApplicationResponse> receivedLoanApplications =
+            loanApplicationsController.loanApplications();
+        assertThat(receivedLoanApplications)
+            .containsExactlyInAnyOrderElementsOf(expectedLoanApplications);
     }
 
     @Test

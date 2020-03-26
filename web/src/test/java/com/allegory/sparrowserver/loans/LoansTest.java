@@ -85,6 +85,14 @@ public final class LoansTest {
     }
 
     @Test
+    public void two_identical_get_loan_officer_responses_are_equal() {
+        final GetLoanOfficerResponse paul = new GetLoanOfficerResponse("Paul", 5);
+        final GetLoanOfficerResponse paulsClone = new GetLoanOfficerResponse("Paul", 5);
+        assertEquals(paul, paulsClone);
+
+    }
+
+    @Test
     public void getting_all_loan_officers_returns_all_loan_officers() {
         final List<LoanOfficer> initialLoanOfficers = new ArrayList<>();
         initialLoanOfficers.add(paul);

@@ -35,11 +35,12 @@ final class LoanApplicationsController {
             @RequestBody final LoanApplicationPostRequest loanApplicationRequest) {
         final Customer buyer = new Customer(loanApplicationRequest.buyer());
         final Property property =
-                new Property(loanApplicationRequest.propertyAddress());
+            new Property(loanApplicationRequest.propertyAddress());
 
         // Currently a customer does not pick their own loan officer
         final LoanOfficer paul = new LoanOfficer("Paul", 5);
-        final LoanApplication loanApplication = buyer.applyForLoan(property, paul);
+        final LoanApplication loanApplication =
+            new LoanApplication(buyer, property, paul);
         return new LoanApplicationPostResponse(
             loanApplication.buyer().name(),
             loanApplication.property().address(),

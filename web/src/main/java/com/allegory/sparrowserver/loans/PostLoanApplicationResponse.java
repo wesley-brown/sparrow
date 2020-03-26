@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * POST response data for a REST endpoint used to apply for a loan.
  */
-public final class LoanApplicationPostResponse {
+public final class PostLoanApplicationResponse {
     private final String applicantName;
     private final String propertyAddress;
     private final String loanOfficerName;
@@ -18,7 +18,7 @@ public final class LoanApplicationPostResponse {
      * @param loanOfficerName the name of the loan officer the loan was applied
      *                        through.
      */
-    public LoanApplicationPostResponse(
+    public PostLoanApplicationResponse(
             final String applicantName,
             final String propertyAddress,
             final String loanOfficerName) {
@@ -57,12 +57,12 @@ public final class LoanApplicationPostResponse {
             return true;
         }
 
-        if (!(other instanceof LoanApplicationPostResponse)) {
+        if (!(other instanceof PostLoanApplicationResponse)) {
             return false;
         }
 
-        final LoanApplicationPostResponse otherLoanAppResponse =
-            (LoanApplicationPostResponse) other;
+        final PostLoanApplicationResponse otherLoanAppResponse =
+            (PostLoanApplicationResponse) other;
         return (otherLoanAppResponse.applicantName.equals(this.applicantName))
             && (otherLoanAppResponse.propertyAddress.equals(this.propertyAddress))
             && (otherLoanAppResponse.loanOfficerName.equals(this.loanOfficerName));

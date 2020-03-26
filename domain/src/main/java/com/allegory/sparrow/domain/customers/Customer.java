@@ -1,6 +1,4 @@
-package com.allegory.sparrowserver.customers;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+package com.allegory.sparrow.domain.customers;
 
 /**
  * A customer.
@@ -17,7 +15,6 @@ public final class Customer {
         this.name = name;
     }
 
-    @JsonProperty
     public String name() {
         return name;
     }

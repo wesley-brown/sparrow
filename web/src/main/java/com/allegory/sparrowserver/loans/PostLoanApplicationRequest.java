@@ -3,11 +3,11 @@ package com.allegory.sparrowserver.loans;
 /**
  * POST request data for a REST endpoint used to apply for a loan.
  */
-final class LoanApplicationPostRequest {
+final class PostLoanApplicationRequest {
     private final String buyer;
     private final String propertyAddress;
 
-    LoanApplicationPostRequest(final String buyer,
+    PostLoanApplicationRequest(final String buyer,
                                final String propertyAddress) {
         this.buyer = buyer;
         this.propertyAddress = propertyAddress;

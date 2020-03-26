@@ -1,4 +1,4 @@
-package com.allegory.sparrowserver.customers;
+package com.allegory.sparrow.domain.customers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -1,7 +1,7 @@
 package com.allegory.sparrowserver.loans;
 
+import com.allegory.sparrow.domain.customers.Customer;
 import com.allegory.sparrow.domain.properties.Property;
-import com.allegory.sparrowserver.customers.Customer;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,8 +31,8 @@ final class LoanApplicationsController {
     }
 
     @PostMapping("/api/v1/loan-applications")
-    LoanApplicationPostResponse postLoanApplicationRequest(
-            @RequestBody final LoanApplicationPostRequest loanApplicationRequest) {
+    PostLoanApplicationResponse postLoanApplicationRequest(
+        @RequestBody final PostLoanApplicationRequest loanApplicationRequest) {
         final Customer buyer = new Customer(loanApplicationRequest.buyer());
         final Property property =
             new Property(loanApplicationRequest.propertyAddress());
@@ -41,7 +41,7 @@ final class LoanApplicationsController {
         final LoanOfficer paul = new LoanOfficer("Paul", 5);
         final LoanApplication loanApplication =
             new LoanApplication(buyer, property, paul);
-        return new LoanApplicationPostResponse(
+        return new PostLoanApplicationResponse(
             loanApplication.buyer().name(),
             loanApplication.property().address(),
             loanApplication.loanOfficer().name()

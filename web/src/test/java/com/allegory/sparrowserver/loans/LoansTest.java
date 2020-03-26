@@ -78,6 +78,13 @@ public final class LoansTest {
     }
 
     @Test
+    public void two_identical_get_loan_officer_responses_have_the_same_hash_codes() {
+        final GetLoanOfficerResponse paul = new GetLoanOfficerResponse("Paul", 5);
+        final GetLoanOfficerResponse paulsClone = new GetLoanOfficerResponse("Paul", 5);
+        assertEquals(paul.hashCode(), paulsClone.hashCode());
+    }
+
+    @Test
     public void getting_all_loan_officers_returns_all_loan_officers() {
         final List<LoanOfficer> initialLoanOfficers = new ArrayList<>();
         initialLoanOfficers.add(paul);

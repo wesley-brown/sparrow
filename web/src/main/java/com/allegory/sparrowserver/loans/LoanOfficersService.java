@@ -1,5 +1,6 @@
 package com.allegory.sparrowserver.loans;
 
+import com.allegory.sparrow.domain.loans.LoanOfficer;
 import java.util.List;
 import org.springframework.stereotype.Service;
 

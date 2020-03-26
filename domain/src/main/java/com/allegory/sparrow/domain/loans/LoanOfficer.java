@@ -1,4 +1,4 @@
-package com.allegory.sparrowserver.loans;
+package com.allegory.sparrow.domain.loans;
 
 /**
  * Assists people applying for loans.

@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.allegory.sparrow.domain.customers.Customer;
+import com.allegory.sparrow.domain.loans.LoanOfficer;
 import com.allegory.sparrow.domain.properties.Property;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,18 +64,6 @@ public final class LoansTest {
 
         bobsLoanApplication = null;
         initialLoanApplications = null;
-    }
-
-    @Test
-    public void two_identical_loan_officers_have_the_same_hash_code() {
-        final LoanOfficer paulsClone = new LoanOfficer("Paul", 5);
-        assertEquals(paul.hashCode(), paulsClone.hashCode());
-    }
-
-    @Test
-    public void two_identical_loan_officer_are_equal() {
-        final LoanOfficer paulsClone = new LoanOfficer("Paul", 5);
-        assertEquals(paul, paulsClone);
     }
 
     @Test

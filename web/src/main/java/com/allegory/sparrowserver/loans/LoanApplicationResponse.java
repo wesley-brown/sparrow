@@ -3,22 +3,22 @@ package com.allegory.sparrowserver.loans;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * POST response data for a REST endpoint used to apply for a loan.
+ * Data for loan application endpoints.
  */
-public final class PostLoanApplicationResponse {
+public final class LoanApplicationResponse {
     private final String applicantName;
     private final String propertyAddress;
     private final String loanOfficerName;
 
     /**
-     * Create a new LoanApplicationPostResponse.
+     * Create a new LoanApplicationResponse.
      *
      * @param applicantName the name of the applicant the loan is for.
      * @param propertyAddress the address of the property the loan is for.
      * @param loanOfficerName the name of the loan officer the loan was applied
      *                        through.
      */
-    public PostLoanApplicationResponse(
+    public LoanApplicationResponse(
             final String applicantName,
             final String propertyAddress,
             final String loanOfficerName) {
@@ -57,12 +57,12 @@ public final class PostLoanApplicationResponse {
             return true;
         }
 
-        if (!(other instanceof PostLoanApplicationResponse)) {
+        if (!(other instanceof LoanApplicationResponse)) {
             return false;
         }
 
-        final PostLoanApplicationResponse otherLoanAppResponse =
-            (PostLoanApplicationResponse) other;
+        final LoanApplicationResponse otherLoanAppResponse =
+            (LoanApplicationResponse) other;
         return (otherLoanAppResponse.applicantName.equals(this.applicantName))
             && (otherLoanAppResponse.propertyAddress.equals(this.propertyAddress))
             && (otherLoanAppResponse.loanOfficerName.equals(this.loanOfficerName));

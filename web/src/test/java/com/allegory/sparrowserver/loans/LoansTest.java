@@ -130,13 +130,13 @@ public final class LoansTest {
         final PostLoanApplicationRequest alicesLoanApplicationRequest =
                 new PostLoanApplicationRequest(
                         alicesName, addressOfApartmentAliceWants);
-        final PostLoanApplicationResponse receivedLoanApplication =
+        final LoanApplicationResponse receivedLoanApplication =
                 loanApplicationsController.postLoanApplicationRequest(alicesLoanApplicationRequest);
         final Customer alice = new Customer(alicesName);
         final Property apartmentAliceWants =
                 new Property(addressOfApartmentAliceWants);
-        final PostLoanApplicationResponse alicesExpectedLoanApplication = new
-                PostLoanApplicationResponse(
+        final LoanApplicationResponse alicesExpectedLoanApplication = new
+                LoanApplicationResponse(
                 alicesName,
                 addressOfApartmentAliceWants,
                 paulsName
@@ -146,14 +146,14 @@ public final class LoansTest {
 
     @Test
     public void two_identical_loan_application_post_responses_should_have_the_same_hash_codes() {
-        final PostLoanApplicationResponse alicesLoanApplication = new
-                PostLoanApplicationResponse(
+        final LoanApplicationResponse alicesLoanApplication = new
+                LoanApplicationResponse(
                 alicesName,
                 addressOfApartmentAliceWants,
                 paulsName
             );
-        final PostLoanApplicationResponse alicesDuplicateLoanApplication = new
-                PostLoanApplicationResponse(
+        final LoanApplicationResponse alicesDuplicateLoanApplication = new
+                LoanApplicationResponse(
                 alicesName,
                 addressOfApartmentAliceWants,
                 paulsName
@@ -166,14 +166,14 @@ public final class LoansTest {
 
     @Test
     public void two_identical_loan_application_post_responses_are_equal() {
-        final PostLoanApplicationResponse alicesLoanApplication = new
-                PostLoanApplicationResponse(
+        final LoanApplicationResponse alicesLoanApplication = new
+                LoanApplicationResponse(
                 alicesName,
                 addressOfApartmentAliceWants,
                 paulsName
             );
-        final PostLoanApplicationResponse alicesDuplicateLoanApplication = new
-                PostLoanApplicationResponse(
+        final LoanApplicationResponse alicesDuplicateLoanApplication = new
+                LoanApplicationResponse(
                 alicesName,
                 addressOfApartmentAliceWants,
                 paulsName

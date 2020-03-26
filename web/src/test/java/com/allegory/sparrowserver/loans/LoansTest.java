@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.allegory.sparrow.domain.customers.Customer;
+import com.allegory.sparrow.domain.loans.LoanApplication;
 import com.allegory.sparrow.domain.loans.LoanOfficer;
 import com.allegory.sparrow.domain.properties.Property;
 import java.util.ArrayList;
@@ -100,21 +101,6 @@ public final class LoansTest {
 
         assertThat(receivedLoanOfficers).containsExactlyInAnyOrderElementsOf(
                 expectedLoanOfficers);
-    }
-
-    @Test
-    public void two_identical_loan_applications_have_the_same_hash_codes() {
-        final LoanApplication bobsDuplicateLoanApplication =
-                new LoanApplication(bob, propertyBobWants, paul);
-        assertEquals(bobsLoanApplication.hashCode(),
-                bobsDuplicateLoanApplication.hashCode());
-    }
-
-    @Test
-    public void two_identical_loan_applications_should_be_equal() {
-        final LoanApplication bobsDuplicateLoanApplication =
-                new LoanApplication(bob, propertyBobWants, paul);
-        assertEquals(bobsLoanApplication, bobsDuplicateLoanApplication);
     }
 
     @Test

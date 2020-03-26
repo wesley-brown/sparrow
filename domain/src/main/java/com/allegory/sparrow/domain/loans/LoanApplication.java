@@ -1,7 +1,6 @@
-package com.allegory.sparrowserver.loans;
+package com.allegory.sparrow.domain.loans;
 
 import com.allegory.sparrow.domain.customers.Customer;
-import com.allegory.sparrow.domain.loans.LoanOfficer;
 import com.allegory.sparrow.domain.properties.Property;
 
 /**

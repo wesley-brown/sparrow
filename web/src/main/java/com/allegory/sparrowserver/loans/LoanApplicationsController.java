@@ -1,6 +1,7 @@
 package com.allegory.sparrowserver.loans;
 
 import com.allegory.sparrow.domain.customers.Customer;
+import com.allegory.sparrow.domain.loans.LoanApplication;
 import com.allegory.sparrow.domain.loans.LoanOfficer;
 import com.allegory.sparrow.domain.properties.Property;
 import java.util.ArrayList;

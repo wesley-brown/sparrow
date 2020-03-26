@@ -139,7 +139,7 @@ public final class LoansTest {
     }
 
     @Test
-    public void two_identical_loan_application_post_responses_should_have_the_same_hash_codes() {
+    public void identical_loan_application_responses_have_the_same_hash_codes() {
         final LoanApplicationResponse alicesLoanApplication = new
                 LoanApplicationResponse(
                 alicesName,
@@ -159,7 +159,7 @@ public final class LoansTest {
     }
 
     @Test
-    public void two_identical_loan_application_post_responses_are_equal() {
+    public void identical_loan_application_responses_are_equal() {
         final LoanApplicationResponse alicesLoanApplication = new
                 LoanApplicationResponse(
                 alicesName,

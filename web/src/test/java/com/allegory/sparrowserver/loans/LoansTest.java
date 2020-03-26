@@ -97,14 +97,20 @@ public final class LoansTest {
         final List<LoanOfficer> initialLoanOfficers = new ArrayList<>();
         initialLoanOfficers.add(paul);
         initialLoanOfficers.add(new LoanOfficer("Alice", 5));
+
         final LoanOfficersService loanOfficersService =
-                new LoanOfficersService(initialLoanOfficers);
+            new LoanOfficersService(initialLoanOfficers);
         final LoanOfficersController loanOfficersController =
-                new LoanOfficersController(loanOfficersService);
-        final List<LoanOfficer> receivedLoanOfficers =
-                loanOfficersController.loanOfficers();
+            new LoanOfficersController(loanOfficersService);
+        final List<GetLoanOfficerResponse> receivedLoanOfficers =
+            loanOfficersController.loanOfficers();
+        final List<GetLoanOfficerResponse> expectedLoanOfficers =
+            new ArrayList<>();
+        expectedLoanOfficers.add(new GetLoanOfficerResponse("Paul", 5));
+        expectedLoanOfficers.add(new GetLoanOfficerResponse("Alice", 5));
+
         assertThat(receivedLoanOfficers).containsExactlyInAnyOrderElementsOf(
-                initialLoanOfficers);
+                expectedLoanOfficers);
     }
 
     @Test

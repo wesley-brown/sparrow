@@ -1,5 +1,7 @@
 package com.allegory.sparrowserver.loans;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Response data for a GET request to a REST endpoint that returns loan
  * officers.
@@ -17,6 +19,16 @@ public final class GetLoanOfficerResponse {
     public GetLoanOfficerResponse(final String name, final int rating) {
         this.name = name;
         this.rating = rating;
+    }
+
+    @JsonProperty
+    public String name() {
+        return name;
+    }
+
+    @JsonProperty
+    public int rating() {
+        return rating;
     }
 
     @Override

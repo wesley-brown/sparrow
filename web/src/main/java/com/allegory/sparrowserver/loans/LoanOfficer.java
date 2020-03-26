@@ -1,7 +1,5 @@
 package com.allegory.sparrowserver.loans;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 /**
  * Assists people applying for loans.
  */
@@ -20,12 +18,10 @@ public final class LoanOfficer {
         this.rating = rating;
     }
 
-    @JsonProperty
     public String name() {
         return name;
     }
 
-    @JsonProperty
     public int rating() {
         return rating;
     }

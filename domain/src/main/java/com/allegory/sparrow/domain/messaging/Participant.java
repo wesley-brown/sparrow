@@ -21,4 +21,21 @@ final class Participant {
         int result = name.hashCode();
         return result;
     }
+
+    @Override
+    public boolean equals(final Object other) {
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof Participant)) {
+            return false;
+        }
+        final Participant participant = (Participant) other;
+        return participant.name.equals(this.name);
+    }
+
+    @Override
+    public String toString() {
+        return "<name=" + name + ">";
+    }
 }

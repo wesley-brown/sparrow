@@ -2,14 +2,32 @@ package com.allegory.sparrow.domain.messaging;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 final class MessagingTest {
+    private Participant bob;
+
+    @BeforeEach
+    private void setUp() {
+        bob = new Participant("Bob");
+    }
+
+    @AfterEach
+    private void tearDown() {
+        bob = null;
+    }
 
     @Test
     void identical_participants_have_same_hash_codes() {
-        final Participant bob = new Participant("Bob");
         final Participant bobsClone = new Participant("Bob");
         assertEquals(bob.hashCode(), bobsClone.hashCode());
+    }
+
+    @Test
+    void identical_participants_are_equal() {
+        final Participant bobsClone = new Participant("Bob");
+        assertEquals(bob, bobsClone);
     }
 }

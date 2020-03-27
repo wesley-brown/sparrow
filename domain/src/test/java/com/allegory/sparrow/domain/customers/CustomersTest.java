@@ -10,12 +10,12 @@ public final class CustomersTest {
     private Customer bob;
 
     @BeforeEach
-    private void setUp() {
+    void setUp() {
         bob = new Customer("Bob");
     }
 
     @AfterEach
-    private void tearDown() {
+    void tearDown() {
         bob = null;
     }
 

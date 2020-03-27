@@ -11,13 +11,13 @@ public final class PropertiesTest {
     private Property houseAliceWants;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         houseBobWants = new Property("123 Main St");
         houseAliceWants = new Property("123 Main St");
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         houseBobWants = null;
         houseAliceWants = null;
     }

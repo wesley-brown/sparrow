@@ -16,7 +16,7 @@ public final class LoansTest {
     private LoanApplication bobsLoanApplication;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         bob = new Customer("Bob");
         houseBobWants = new Property("123 Main St");
         paul = new LoanOfficer("Paul", 5);
@@ -24,7 +24,7 @@ public final class LoansTest {
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         bob = null;
         houseBobWants = null;
         paul = null;

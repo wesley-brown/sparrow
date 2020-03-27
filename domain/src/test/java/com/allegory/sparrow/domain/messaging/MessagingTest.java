@@ -10,12 +10,12 @@ final class MessagingTest {
     private Participant bob;
 
     @BeforeEach
-    private void setUp() {
+    void setUp() {
         bob = new Participant("Bob");
     }
 
     @AfterEach
-    private void tearDown() {
+    void tearDown() {
         bob = null;
     }
 

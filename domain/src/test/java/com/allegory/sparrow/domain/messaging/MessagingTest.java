@@ -1,7 +1,10 @@
 package com.allegory.sparrow.domain.messaging;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,5 +53,15 @@ final class MessagingTest {
         final DeliveredMessage paulsDuplicateMessage =
             new DeliveredMessage(paul, bob, "How can I help you?");
         assertEquals(paulsMessage, paulsDuplicateMessage);
+    }
+
+    @Test
+    void including_a_delivered_message_adds_it_to_the_list_of_all_delivered_messages() {
+        final Conversation paulAndBobsConversation = new Conversation();
+        paulAndBobsConversation.includeDeliveredMessage(paulsMessage);
+        final List<DeliveredMessage> expectedMessages = new ArrayList<>();
+        expectedMessages.add(paulsMessage);
+        assertThat(paulAndBobsConversation.deliveredMessages())
+            .containsExactlyInAnyOrderElementsOf(expectedMessages);
     }
 }

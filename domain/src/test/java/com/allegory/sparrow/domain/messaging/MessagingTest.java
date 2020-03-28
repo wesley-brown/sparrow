@@ -30,4 +30,14 @@ final class MessagingTest {
         final Participant bobsClone = new Participant("Bob");
         assertEquals(bob, bobsClone);
     }
+
+    @Test
+    void identical_delivered_messages_have_same_hash_codes() {
+        final Participant paul = new Participant("Paul");
+        final DeliveredMessage paulsMessage =
+            new DeliveredMessage(paul, bob, "How can I help you?");
+        final DeliveredMessage paulsDuplicateMessage =
+            new DeliveredMessage(paul, bob, "How can I help you?");
+        assertEquals(paulsMessage.hashCode(), paulsDuplicateMessage.hashCode());
+    }
 }

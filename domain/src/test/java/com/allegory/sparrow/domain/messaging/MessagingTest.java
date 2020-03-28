@@ -13,6 +13,7 @@ final class MessagingTest {
     private Participant paul;
     private Participant bob;
     private DeliveredMessage paulsMessage;
+    private Conversation paulAndBobsConversation;
 
     @BeforeEach
     void setUp() {
@@ -20,6 +21,7 @@ final class MessagingTest {
         bob = new Participant("Bob");
         paulsMessage =
             new DeliveredMessage(paul, bob, "How can I help you?");
+        paulAndBobsConversation = new Conversation();
     }
 
     @AfterEach
@@ -27,6 +29,7 @@ final class MessagingTest {
         paul = null;
         bob = null;
         paulsMessage = null;
+        paulAndBobsConversation = null;
     }
 
     @Test
@@ -57,11 +60,19 @@ final class MessagingTest {
 
     @Test
     void including_a_delivered_message_adds_it_to_the_list_of_all_delivered_messages() {
-        final Conversation paulAndBobsConversation = new Conversation();
         paulAndBobsConversation.includeDeliveredMessage(paulsMessage);
         final List<DeliveredMessage> expectedMessages = new ArrayList<>();
         expectedMessages.add(paulsMessage);
         assertThat(paulAndBobsConversation.deliveredMessages())
             .containsExactlyInAnyOrderElementsOf(expectedMessages);
+    }
+
+    @Test
+    void sending_an_undelivered_message_returns_an_equivalent_delivered_message() {
+        final UndeliveredMessage paulsUndeliveredMessage = new UndeliveredMessage(
+            paulAndBobsConversation, paul, "How can I help you?");
+        final DeliveredMessage paulsDeliveredMessage =
+            paulsUndeliveredMessage.sendTo(bob);
+        assertEquals(paulsMessage, paulsDeliveredMessage);
     }
 }

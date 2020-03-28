@@ -4,6 +4,7 @@ package com.allegory.sparrow.domain.messaging;
  * A message that has not yet been delivered to its receiver.
  */
 final class UndeliveredMessage {
+    private final Conversation conversation;
     private final Participant sender;
     private final String content;
 
@@ -16,6 +17,7 @@ final class UndeliveredMessage {
      */
     UndeliveredMessage(final Conversation conversation,
                        final Participant sender, final String content) {
+        this.conversation = conversation;
         this.sender = sender;
         this.content = content;
     }
@@ -27,6 +29,9 @@ final class UndeliveredMessage {
      * @return The delivered message.
      */
     DeliveredMessage sendTo(final Participant receiver) {
-        return new DeliveredMessage(sender, receiver, content);
+        final DeliveredMessage deliveredMessage =
+            new DeliveredMessage(sender, receiver, content);
+        conversation.includeDeliveredMessage(deliveredMessage);
+        return deliveredMessage;
     }
 }

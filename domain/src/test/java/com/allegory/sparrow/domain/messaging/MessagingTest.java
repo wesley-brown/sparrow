@@ -14,6 +14,7 @@ final class MessagingTest {
     private Participant bob;
     private DeliveredMessage paulsMessage;
     private Conversation paulAndBobsConversation;
+    private UndeliveredMessage bobsUndeliveredMessage;
 
     @BeforeEach
     void setUp() {
@@ -22,6 +23,8 @@ final class MessagingTest {
         paulsMessage =
             new DeliveredMessage(paul, bob, "How can I help you?");
         paulAndBobsConversation = new Conversation();
+        bobsUndeliveredMessage = new UndeliveredMessage(
+            paulAndBobsConversation, bob, "I'm looking to buy a house.");
     }
 
     @AfterEach
@@ -30,6 +33,7 @@ final class MessagingTest {
         bob = null;
         paulsMessage = null;
         paulAndBobsConversation = null;
+        bobsUndeliveredMessage = null;
     }
 
     @Test
@@ -69,10 +73,18 @@ final class MessagingTest {
 
     @Test
     void sending_an_undelivered_message_returns_an_equivalent_delivered_message() {
-        final UndeliveredMessage paulsUndeliveredMessage = new UndeliveredMessage(
-            paulAndBobsConversation, paul, "How can I help you?");
-        final DeliveredMessage paulsDeliveredMessage =
-            paulsUndeliveredMessage.sendTo(bob);
-        assertEquals(paulsMessage, paulsDeliveredMessage);
+        final DeliveredMessage bobsExpectedDeliveredMessage =
+                new DeliveredMessage(bob, paul, "I'm looking to buy a house.");
+        final DeliveredMessage bobsActualDeliveredMessage =
+            bobsUndeliveredMessage.sendTo(paul);
+        assertEquals(bobsExpectedDeliveredMessage, bobsActualDeliveredMessage);
+    }
+
+    @Test
+    void sending_an_undelivered_message_adds_it_to_the_conversation() {
+        final List<DeliveredMessage> expectedMessages = new ArrayList<>();
+        expectedMessages.add(new DeliveredMessage(bob, paul, "I'm looking to buy a house."));
+        bobsUndeliveredMessage.sendTo(paul);
+        assertThat(paulAndBobsConversation.deliveredMessages()).containsExactlyInAnyOrderElementsOf(expectedMessages);
     }
 }

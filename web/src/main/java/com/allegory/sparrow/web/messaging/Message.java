@@ -30,4 +30,24 @@ final class Message {
         result = 31 * result * content.hashCode();
         return result;
     }
+
+    @Override
+    public boolean equals(final Object other) {
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof Message)) {
+            return false;
+        }
+        final Message message = (Message) other;
+        return (message.senderName.equals(this.senderName))
+            && (message.receiverName.equals(this.receiverName))
+            && (message.content.equals(this.content));
+    }
+
+    @Override
+    public String toString() {
+        return "<senderName=" + senderName + ", receiverName=" + receiverName
+            + ", content=" + content + ">";
+    }
 }

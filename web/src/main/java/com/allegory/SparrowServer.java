@@ -1,4 +1,4 @@
-package com.allegory.sparrowserver;
+package com.allegory;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

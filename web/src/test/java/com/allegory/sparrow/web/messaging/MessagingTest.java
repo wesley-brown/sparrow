@@ -64,8 +64,9 @@ final class MessagingTest {
     void getting_a_conversation_by_a_valid_id_returns_that_conversation() {
         final List<ConversationResponse> conversations = new ArrayList<>();
         conversations.add(paulAndBobsConversation);
+        final ConversationsService conversationsService = new ConversationsService(conversations);
         final ConversationsController conversationsController =
-            new ConversationsController(conversations);
+            new ConversationsController(conversationsService);
         final ConversationResponse receivedConversation =
             conversationsController.getConversationById(1);
         assertEquals(paulAndBobsConversation, receivedConversation);

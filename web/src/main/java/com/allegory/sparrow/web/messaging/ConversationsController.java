@@ -1,21 +1,26 @@
 package com.allegory.sparrow.web.messaging;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * A REST controller for conversation endpoints.
  */
+@RestController
 final class ConversationsController {
-    private List<ConversationResponse> conversations;
+    private ConversationsService conversationsService;
 
     /**
      * Create a new conversations controller.
      *
-     * @param conversations the conversations this conversations controller
-     *                      initially knows about.
+     * @param conversationsService the conversations service that the new
+     *                             conversations controller will use.
      */
-    ConversationsController(final List<ConversationResponse> conversations) {
-        this.conversations = conversations;
+    @Autowired
+    ConversationsController(final ConversationsService conversationsService) {
+        this.conversationsService = conversationsService;
     }
 
     /**
@@ -24,13 +29,8 @@ final class ConversationsController {
      * @param id the unique ID of the conversation.
      * @return the conversation with the given ID.
      */
-    ConversationResponse getConversationById(long id) {
-        ConversationResponse requestedConversation = null;
-        for (final ConversationResponse conversation : conversations) {
-            if (conversation.id() == id) {
-                requestedConversation = conversation;
-            }
-        }
-        return requestedConversation;
+    @GetMapping("/api/v1/conversations/{id}")
+    ConversationResponse getConversationById(@PathVariable long id) {
+        return conversationsService.findById(id);
     }
 }

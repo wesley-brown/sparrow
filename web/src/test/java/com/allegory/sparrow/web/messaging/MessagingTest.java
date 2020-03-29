@@ -9,16 +9,23 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 final class MessagingTest {
+    private List<String> namesOfParticipants;
+    private List<Message> paulAndBobsMessages;
     private Message paulsMessage;
 
     @BeforeEach
     void setUp() {
+        namesOfParticipants = new ArrayList<>();
+        addParticipants();
+        paulAndBobsMessages = new ArrayList<>();
         paulsMessage = new Message(
             "Paul", "Bob", "How can I help you?");
     }
 
     @AfterEach
     void tearDown() {
+        namesOfParticipants = null;
+        paulAndBobsMessages = null;
         paulsMessage = null;
     }
 
@@ -36,20 +43,35 @@ final class MessagingTest {
 
     @Test
     void identical_conversation_responses_have_the_same_hash_codes() {
-        final List<String> namesOfParticipants = new ArrayList<>();
+        paulMessagesBob();
+        final ConversationResponse paulAndBobsConversation =
+            new ConversationResponse(1, namesOfParticipants, paulAndBobsMessages);
+        final ConversationResponse paulAndBobsDuplicateConversation =
+            new ConversationResponse(1, namesOfParticipants, paulAndBobsMessages);
+        assertEquals(paulAndBobsConversation.hashCode(),
+            paulAndBobsDuplicateConversation.hashCode());
+    }
+
+    @Test
+    void identical_conversation_responses_are_equal() {
+        paulMessagesBob();
+        final ConversationResponse paulAndBobsConversation =
+            new ConversationResponse(1, namesOfParticipants, paulAndBobsMessages);
+        final ConversationResponse paulAndBobsDuplicateConversation =
+            new ConversationResponse(1, namesOfParticipants, paulAndBobsMessages);
+        assertEquals(paulAndBobsConversation, paulAndBobsDuplicateConversation);
+    }
+
+    private void addParticipants() {
         namesOfParticipants.add("Paul");
         namesOfParticipants.add("Bob");
-        final List<Message> paulAndBobsMessages = new ArrayList<>();
-        paulAndBobsMessages.add(paulsMessage);
-        final ConversationResponse paulAndBobsConversationResponse =
-            new ConversationResponse(1, namesOfParticipants, paulAndBobsMessages);
-        final ConversationResponse paulAndBobsDuplicateConversationResponse =
-            new ConversationResponse(1, namesOfParticipants, paulAndBobsMessages);
-        assertEquals(paulAndBobsConversationResponse.hashCode(),
-            paulAndBobsDuplicateConversationResponse.hashCode());
     }
 
     private Message duplicatePaulsMessage() {
         return new Message("Paul", "Bob", "How can I help you?");
+    }
+
+    private void paulMessagesBob() {
+        paulAndBobsMessages.add(paulsMessage);
     }
 }

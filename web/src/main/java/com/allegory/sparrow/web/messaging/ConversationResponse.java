@@ -25,6 +25,10 @@ final class ConversationResponse {
         this.messages = messages;
     }
 
+    long id() {
+        return id;
+    }
+
     @Override
     public int hashCode() {
         // Uses the Effective Java 3 Item 11 algorithm

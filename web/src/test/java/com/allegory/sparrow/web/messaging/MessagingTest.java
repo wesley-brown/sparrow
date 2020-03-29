@@ -60,6 +60,17 @@ final class MessagingTest {
         assertEquals(paulAndBobsConversation, paulAndBobsDuplicateConversation);
     }
 
+    @Test
+    void getting_a_conversation_by_a_valid_id_returns_that_conversation() {
+        final List<ConversationResponse> conversations = new ArrayList<>();
+        conversations.add(paulAndBobsConversation);
+        final ConversationsController conversationsController =
+            new ConversationsController(conversations);
+        final ConversationResponse receivedConversation =
+            conversationsController.getConversationById(1);
+        assertEquals(paulAndBobsConversation, receivedConversation);
+    }
+
     private void addParticipants() {
         namesOfParticipants.add("Paul");
         namesOfParticipants.add("Bob");

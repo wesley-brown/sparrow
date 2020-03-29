@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 final class MessagingTest {
     private List<String> namesOfParticipants;
     private List<Message> paulAndBobsMessages;
+    private ConversationResponse paulAndBobsConversation;
     private Message paulsMessage;
 
     @BeforeEach
@@ -18,6 +19,8 @@ final class MessagingTest {
         namesOfParticipants = new ArrayList<>();
         addParticipants();
         paulAndBobsMessages = new ArrayList<>();
+        paulAndBobsConversation = new ConversationResponse(
+            1, namesOfParticipants, paulAndBobsMessages);
         paulsMessage = new Message(
             "Paul", "Bob", "How can I help you?");
     }
@@ -26,6 +29,7 @@ final class MessagingTest {
     void tearDown() {
         namesOfParticipants = null;
         paulAndBobsMessages = null;
+        paulAndBobsConversation = null;
         paulsMessage = null;
     }
 
@@ -43,9 +47,6 @@ final class MessagingTest {
 
     @Test
     void identical_conversation_responses_have_the_same_hash_codes() {
-        paulMessagesBob();
-        final ConversationResponse paulAndBobsConversation =
-            new ConversationResponse(1, namesOfParticipants, paulAndBobsMessages);
         final ConversationResponse paulAndBobsDuplicateConversation =
             new ConversationResponse(1, namesOfParticipants, paulAndBobsMessages);
         assertEquals(paulAndBobsConversation.hashCode(),
@@ -54,9 +55,6 @@ final class MessagingTest {
 
     @Test
     void identical_conversation_responses_are_equal() {
-        paulMessagesBob();
-        final ConversationResponse paulAndBobsConversation =
-            new ConversationResponse(1, namesOfParticipants, paulAndBobsMessages);
         final ConversationResponse paulAndBobsDuplicateConversation =
             new ConversationResponse(1, namesOfParticipants, paulAndBobsMessages);
         assertEquals(paulAndBobsConversation, paulAndBobsDuplicateConversation);
@@ -69,9 +67,5 @@ final class MessagingTest {
 
     private Message duplicatePaulsMessage() {
         return new Message("Paul", "Bob", "How can I help you?");
-    }
-
-    private void paulMessagesBob() {
-        paulAndBobsMessages.add(paulsMessage);
     }
 }

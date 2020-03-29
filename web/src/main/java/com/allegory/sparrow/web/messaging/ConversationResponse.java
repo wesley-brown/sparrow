@@ -28,9 +28,6 @@ final class ConversationResponse {
     @Override
     public int hashCode() {
         // Uses the Effective Java 3 Item 11 algorithm
-        int result = Long.hashCode(id);
-        result = 31 * result * participantNames.hashCode();
-        result = 31 * result * messages.hashCode();
-        return result;
+        return Long.hashCode(id);
     }
 }

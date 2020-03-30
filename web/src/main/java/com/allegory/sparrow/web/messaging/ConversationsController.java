@@ -65,4 +65,14 @@ final class ConversationsController {
             conversationsService.addConversation(createdConversation);
         return addedConversation;
     }
+
+    MessageResponse postMessage(final Long conversationId,
+                                final MessageRequest message) {
+        return new MessageResponse(
+            counter.incrementAndGet(),
+            message.senderName(),
+            message.receiverName(),
+            message.content()
+        );
+    }
 }

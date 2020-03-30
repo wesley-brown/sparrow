@@ -95,6 +95,17 @@ final class MessagingTest {
             .contains(paulAndAlicesConversation);
     }
 
+    @Test
+    void posting_a_message_in_a_conversation_returns_that_message() {
+        final ConversationResponse paulAndAlicesConversation =
+            paulMessagesAlice();
+        final MessageRequest paulsMessageToPost =
+            new MessageRequest("Paul", "Alice", "How can I help you today?");
+        final MessageResponse postedMessage = conversationsController
+            .postMessage(paulAndAlicesConversation.id(), paulsMessageToPost);
+        assertEquals(paulsMessageToPost.content(), postedMessage.content());
+    }
+
     private void addParticipants() {
         namesOfParticipants.add("Paul");
         namesOfParticipants.add("Bob");

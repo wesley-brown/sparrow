@@ -22,7 +22,7 @@ final class MessagingTest {
         paulAndBobsConversation = new ConversationResponse(
             1, namesOfParticipants, paulAndBobsMessages);
         paulsMessage = new MessageResponse(
-            "Paul", "Bob", "How can I help you?");
+            1, "Paul", "Bob", "How can I help you?");
     }
 
     @AfterEach
@@ -78,6 +78,6 @@ final class MessagingTest {
     }
 
     private MessageResponse duplicatePaulsMessage() {
-        return new MessageResponse("Paul", "Bob", "How can I help you?");
+        return new MessageResponse(1, "Paul", "Bob", "How can I help you?");
     }
 }

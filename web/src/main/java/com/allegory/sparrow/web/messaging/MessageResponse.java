@@ -4,19 +4,22 @@ package com.allegory.sparrow.web.messaging;
  * A message.
  */
 final class MessageResponse {
-    private String senderName;
-    private String receiverName;
-    private String content;
+    private final Long id;
+    private final String senderName;
+    private final String receiverName;
+    private final String content;
 
     /**
      * Create a new message.
      *
+     * @param id the unique ID of the message.
      * @param senderName the name of the participant who sent the message.
      * @param receiverName the name of the participant who received the message.
      * @param content the content of the message.
      */
-    MessageResponse(final String senderName, final String receiverName,
-                    final String content) {
+    MessageResponse(final long id, final String senderName,
+                    final String receiverName, final String content) {
+        this.id = id;
         this.senderName = senderName;
         this.receiverName = receiverName;
         this.content = content;
@@ -25,10 +28,7 @@ final class MessageResponse {
     @Override
     public int hashCode() {
         // Uses the Effective Java 3 Item 11 algorithm
-        int result = senderName.hashCode();
-        result = 31 * result * receiverName.hashCode();
-        result = 31 * result * content.hashCode();
-        return result;
+        return id.hashCode();
     }
 
     @Override
@@ -40,14 +40,12 @@ final class MessageResponse {
             return false;
         }
         final MessageResponse messageResponse = (MessageResponse) other;
-        return (messageResponse.senderName.equals(this.senderName))
-            && (messageResponse.receiverName.equals(this.receiverName))
-            && (messageResponse.content.equals(this.content));
+        return (messageResponse.id.equals(this.id));
     }
 
     @Override
     public String toString() {
-        return "<senderName=" + senderName + ", receiverName=" + receiverName
-            + ", content=" + content + ">";
+        return "<id=" + id + "senderName=" + senderName + ", receiverName="
+            + receiverName + ", content=" + content + ">";
     }
 }

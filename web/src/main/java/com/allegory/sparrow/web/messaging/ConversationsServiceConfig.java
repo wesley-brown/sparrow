@@ -22,8 +22,10 @@ class ConversationsServiceConfig {
         participantNames.add("Paul");
         participantNames.add("Bob");
         final List<MessageResponse> messages = new ArrayList<>();
-        messages.add(new MessageResponse("Paul", "Bob", "How can I help you?"));
-        messages.add(new MessageResponse("Bob", "Paul", "I'm looking to buy a new house."));
+        messages.add(new MessageResponse(
+            1, "Paul", "Bob", "How can I help you?"));
+        messages.add(new MessageResponse(
+            1, "Bob", "Paul", "I'm looking to buy a new house."));
         final List<ConversationResponse> conversations = new ArrayList<>();
         conversations.add(new ConversationResponse(1, participantNames, messages));
         return conversations;

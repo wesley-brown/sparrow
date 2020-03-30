@@ -3,7 +3,7 @@ package com.allegory.sparrow.domain.messaging;
 /**
  * A message that has been delivered to its receiver.
  */
-final class DeliveredMessage {
+public final class DeliveredMessage {
     private final Participant sender;
     private final Participant receiver;
     private final String content;
@@ -15,11 +15,24 @@ final class DeliveredMessage {
      * @param receiver the participant who received the message.
      * @param content the content of the message.
      */
-    DeliveredMessage(final Participant sender, final Participant receiver,
-                     final String content) {
+    public DeliveredMessage(final Participant sender,
+                            final Participant receiver,
+                            final String content) {
         this.sender = sender;
         this.receiver = receiver;
         this.content = content;
+    }
+
+    public Participant sender() {
+        return sender;
+    }
+
+    public Participant receiver() {
+        return receiver;
+    }
+
+    public String content() {
+        return content;
     }
 
     @Override

@@ -3,7 +3,7 @@ package com.allegory.sparrow.domain.messaging;
 /**
  * A participant in a conversation.
  */
-final class Participant {
+public final class Participant {
     private final String name;
 
     /**
@@ -11,8 +11,12 @@ final class Participant {
      *
      * @param name the name of the participant.
      */
-    Participant(final String name) {
+    public Participant(final String name) {
         this.name = name;
+    }
+
+    public String name() {
+        return name;
     }
 
     @Override

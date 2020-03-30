@@ -7,17 +7,17 @@ import java.util.List;
 /**
  * A conversation between participants.
  */
-final class Conversation {
+public final class Conversation {
     private final List<DeliveredMessage> deliveredMessages;
 
     /**
      * Create a new conversation.
      */
-    Conversation() {
+    public Conversation() {
         deliveredMessages = new ArrayList<>();
     }
 
-    List<DeliveredMessage> deliveredMessages() {
+    public List<DeliveredMessage> deliveredMessages() {
         return Collections.unmodifiableList(deliveredMessages);
     }
 
@@ -26,7 +26,7 @@ final class Conversation {
      *
      * @param deliveredMessage the new delivered message to include.
      */
-    void includeDeliveredMessage(final DeliveredMessage deliveredMessage) {
+    public void includeDeliveredMessage(final DeliveredMessage deliveredMessage) {
         deliveredMessages.add(deliveredMessage);
     }
 }

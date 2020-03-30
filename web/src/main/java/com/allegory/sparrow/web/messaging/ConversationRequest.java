@@ -1,5 +1,7 @@
 package com.allegory.sparrow.web.messaging;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 /**
@@ -14,7 +16,8 @@ final class ConversationRequest {
      * @param participantNames the names of the participants in the
      *                         new conversation to create.
      */
-    ConversationRequest(final List<String> participantNames) {
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+    ConversationRequest(@JsonProperty("participantNames") final List<String> participantNames) {
         this.participantNames = participantNames;
     }
 

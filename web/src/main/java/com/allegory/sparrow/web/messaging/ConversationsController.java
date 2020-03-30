@@ -6,6 +6,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -50,7 +52,9 @@ final class ConversationsController {
      * @param conversation the conversation to post.
      * @return the posted conversation.
      */
-    ConversationResponse postConversation(final ConversationRequest conversation) {
+    @PostMapping("/api/v1/conversations")
+    ConversationResponse postConversation(
+        @RequestBody final ConversationRequest conversation) {
         final ConversationResponse createdConversation =
             new ConversationResponse(
                 counter.incrementAndGet(),

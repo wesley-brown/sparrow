@@ -1,6 +1,7 @@
 package com.allegory.sparrow.web.messaging;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +25,11 @@ final class ConversationsController {
     @Autowired
     ConversationsController(final ConversationsService conversationsService) {
         this.conversationsService = conversationsService;
-        counter = new AtomicLong();
+        counter = new AtomicLong(conversationsService.lastIdUsed());
+    }
+
+    List<ConversationResponse> getAllConversations() {
+        return conversationsService.conversations();
     }
 
     /**
@@ -51,6 +56,8 @@ final class ConversationsController {
                 conversation.participantNames(),
                 new ArrayList<>()
         );
-        return createdConversation;
+        final ConversationResponse addedConversation =
+            conversationsService.addConversation(createdConversation);
+        return addedConversation;
     }
 }

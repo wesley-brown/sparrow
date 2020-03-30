@@ -81,15 +81,18 @@ final class MessagingTest {
 
     @Test
     void posting_a_valid_conversation_returns_that_conversation() {
-        final List<String> paulAndAlicesNames = new ArrayList<>();
-        paulAndAlicesNames.add("Paul");
-        paulAndAlicesNames.add("Alice");
-        final ConversationRequest paulAndAlicesConversation =
-            new ConversationRequest(paulAndAlicesNames);
-        final ConversationResponse postedConversation =
-            conversationsController.postConversation(paulAndAlicesConversation);
-        assertThat(postedConversation.participantNames())
-            .containsExactlyInAnyOrderElementsOf(paulAndAlicesNames);
+        final ConversationResponse paulAndAlicesConversation =
+            paulMessagesAlice();
+        assertThat(paulAndAlicesConversation.participantNames())
+            .containsExactlyInAnyOrderElementsOf(paulAndAlicesConversation.participantNames());
+    }
+
+    @Test
+    void posting_a_valid_conversation_adds_that_conversation_to_the_list_of_all_conversations() {
+        final ConversationResponse paulAndAlicesConversation =
+            paulMessagesAlice();
+        assertThat(conversationsController.getAllConversations())
+            .contains(paulAndAlicesConversation);
     }
 
     private void addParticipants() {
@@ -99,5 +102,16 @@ final class MessagingTest {
 
     private MessageResponse duplicatePaulsMessage() {
         return new MessageResponse(1, "Paul", "Bob", "How can I help you?");
+    }
+
+    private ConversationResponse paulMessagesAlice() {
+        final List<String> paulAndAlicesNames = new ArrayList<>();
+        paulAndAlicesNames.add("Paul");
+        paulAndAlicesNames.add("Alice");
+        final ConversationRequest paulMessagesAlice =
+            new ConversationRequest(paulAndAlicesNames);
+        final ConversationResponse paulAndAlicesConversation =
+            conversationsController.postConversation(paulMessagesAlice);
+        return paulAndAlicesConversation;
     }
 }

@@ -22,6 +22,37 @@ final class ConversationsService {
     }
 
     /**
+     * Add a given conversation to the list of all conversations.
+     *
+     * @param conversationToAdd the conversation to add.
+     * @return the added conversation.
+     */
+    ConversationResponse addConversation(
+        final ConversationResponse conversationToAdd) {
+        conversations.add(conversationToAdd);
+        return conversationToAdd;
+    }
+
+    List<ConversationResponse> conversations() {
+        return conversations;
+    }
+
+    /**
+     * The last unique conversation ID number that was used.
+     *
+     * @return the last unique Conversation ID number that was used.
+     */
+    Long lastIdUsed() {
+        Long maxId = new Long(1);
+        for (final ConversationResponse conversation : conversations) {
+            if (conversation.id() > maxId) {
+                maxId = conversation.id();
+            }
+        }
+        return maxId;
+    }
+
+    /**
      * Find a conversation by a unique ID.
      *
      * @param id the unique ID of the conversation to find.

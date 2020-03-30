@@ -1,5 +1,7 @@
 package com.allegory.sparrow.web.messaging;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * A message.
  */
@@ -23,6 +25,26 @@ final class MessageResponse {
         this.senderName = senderName;
         this.receiverName = receiverName;
         this.content = content;
+    }
+
+    @JsonProperty
+    Long id() {
+        return id;
+    }
+
+    @JsonProperty
+    String senderName() {
+        return senderName;
+    }
+
+    @JsonProperty
+    String receiverName() {
+        return receiverName;
+    }
+
+    @JsonProperty
+    String content() {
+        return content;
     }
 
     @Override

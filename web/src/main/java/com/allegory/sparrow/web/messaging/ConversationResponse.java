@@ -36,6 +36,11 @@ final class ConversationResponse {
         return participantNames;
     }
 
+    @JsonProperty
+    List<MessageResponse> messages() {
+        return messages;
+    }
+
     @Override
     public int hashCode() {
         // Uses the Effective Java 3 Item 11 algorithm

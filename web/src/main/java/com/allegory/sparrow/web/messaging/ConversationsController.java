@@ -28,6 +28,7 @@ final class ConversationsController {
         counter = new AtomicLong(conversationsService.lastIdUsed());
     }
 
+    @GetMapping("/api/v1/conversations")
     List<ConversationResponse> getAllConversations() {
         return conversationsService.conversations();
     }

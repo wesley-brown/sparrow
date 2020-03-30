@@ -1,5 +1,6 @@
 package com.allegory.sparrow.web.messaging;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
@@ -13,6 +14,9 @@ final class MessagingTest {
     private List<MessageResponse> paulAndBobsMessages;
     private ConversationResponse paulAndBobsConversation;
     private MessageResponse paulsMessage;
+    private List<ConversationResponse> initialConversations;
+    private ConversationsService conversationsService;
+    private ConversationsController conversationsController;
 
     @BeforeEach
     void setUp() {
@@ -23,6 +27,11 @@ final class MessagingTest {
             1, namesOfParticipants, paulAndBobsMessages);
         paulsMessage = new MessageResponse(
             1, "Paul", "Bob", "How can I help you?");
+        initialConversations = new ArrayList<>();
+        initialConversations.add(paulAndBobsConversation);
+        conversationsService = new ConversationsService(initialConversations);
+        conversationsController =
+            new ConversationsController(conversationsService);
     }
 
     @AfterEach
@@ -31,6 +40,9 @@ final class MessagingTest {
         paulAndBobsMessages = null;
         paulAndBobsConversation = null;
         paulsMessage = null;
+        initialConversations = null;
+        conversationsService = null;
+        conversationsController = null;
     }
 
     @Test
@@ -62,14 +74,22 @@ final class MessagingTest {
 
     @Test
     void getting_a_conversation_by_a_valid_id_returns_that_conversation() {
-        final List<ConversationResponse> conversations = new ArrayList<>();
-        conversations.add(paulAndBobsConversation);
-        final ConversationsService conversationsService = new ConversationsService(conversations);
-        final ConversationsController conversationsController =
-            new ConversationsController(conversationsService);
         final ConversationResponse receivedConversation =
             conversationsController.getConversationById(1);
         assertEquals(paulAndBobsConversation, receivedConversation);
+    }
+
+    @Test
+    void posting_a_valid_conversation_returns_that_conversation() {
+        final List<String> paulAndAlicesNames = new ArrayList<>();
+        paulAndAlicesNames.add("Paul");
+        paulAndAlicesNames.add("Alice");
+        final ConversationRequest paulAndAlicesConversation =
+            new ConversationRequest(paulAndAlicesNames);
+        final ConversationResponse postedConversation =
+            conversationsController.postConversation(paulAndAlicesConversation);
+        assertThat(postedConversation.participantNames())
+            .containsExactlyInAnyOrderElementsOf(paulAndAlicesNames);
     }
 
     private void addParticipants() {

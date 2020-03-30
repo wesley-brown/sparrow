@@ -9,7 +9,7 @@ import java.util.List;
 final class ConversationResponse {
     private final Long id;
     private final List<String> participantNames;
-    private final List<Message> messages;
+    private final List<MessageResponse> messages;
 
     /**
      * Create a new conversation response.
@@ -20,7 +20,7 @@ final class ConversationResponse {
      * @param messages the messages in the requested conversation.
      */
     ConversationResponse(final long id, final List<String> participantNames,
-                         final List<Message> messages) {
+                         final List<MessageResponse> messages) {
         this.id = id;
         this.participantNames = participantNames;
         this.messages = messages;

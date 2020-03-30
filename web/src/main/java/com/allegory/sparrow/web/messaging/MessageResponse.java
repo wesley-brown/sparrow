@@ -3,7 +3,7 @@ package com.allegory.sparrow.web.messaging;
 /**
  * A message.
  */
-final class Message {
+final class MessageResponse {
     private String senderName;
     private String receiverName;
     private String content;
@@ -15,8 +15,8 @@ final class Message {
      * @param receiverName the name of the participant who received the message.
      * @param content the content of the message.
      */
-    Message(final String senderName, final String receiverName,
-            final String content) {
+    MessageResponse(final String senderName, final String receiverName,
+                    final String content) {
         this.senderName = senderName;
         this.receiverName = receiverName;
         this.content = content;
@@ -36,13 +36,13 @@ final class Message {
         if (other == this) {
             return true;
         }
-        if (!(other instanceof Message)) {
+        if (!(other instanceof MessageResponse)) {
             return false;
         }
-        final Message message = (Message) other;
-        return (message.senderName.equals(this.senderName))
-            && (message.receiverName.equals(this.receiverName))
-            && (message.content.equals(this.content));
+        final MessageResponse messageResponse = (MessageResponse) other;
+        return (messageResponse.senderName.equals(this.senderName))
+            && (messageResponse.receiverName.equals(this.receiverName))
+            && (messageResponse.content.equals(this.content));
     }
 
     @Override

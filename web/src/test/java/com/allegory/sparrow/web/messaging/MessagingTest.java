@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 
 final class MessagingTest {
     private List<String> namesOfParticipants;
-    private List<Message> paulAndBobsMessages;
+    private List<MessageResponse> paulAndBobsMessages;
     private ConversationResponse paulAndBobsConversation;
-    private Message paulsMessage;
+    private MessageResponse paulsMessage;
 
     @BeforeEach
     void setUp() {
@@ -21,7 +21,7 @@ final class MessagingTest {
         paulAndBobsMessages = new ArrayList<>();
         paulAndBobsConversation = new ConversationResponse(
             1, namesOfParticipants, paulAndBobsMessages);
-        paulsMessage = new Message(
+        paulsMessage = new MessageResponse(
             "Paul", "Bob", "How can I help you?");
     }
 
@@ -35,14 +35,14 @@ final class MessagingTest {
 
     @Test
     void identical_messages_have_the_same_hash_codes() {
-        final Message paulsDuplicateMessage = duplicatePaulsMessage();
-        assertEquals(paulsMessage.hashCode(), paulsDuplicateMessage.hashCode());
+        final MessageResponse paulsDuplicateMessageResponse = duplicatePaulsMessage();
+        assertEquals(paulsMessage.hashCode(), paulsDuplicateMessageResponse.hashCode());
     }
 
     @Test
     void identical_messages_are_equal() {
-        final Message paulsDuplicateMessage = duplicatePaulsMessage();
-        assertEquals(paulsMessage, paulsDuplicateMessage);
+        final MessageResponse paulsDuplicateMessageResponse = duplicatePaulsMessage();
+        assertEquals(paulsMessage, paulsDuplicateMessageResponse);
     }
 
     @Test
@@ -77,7 +77,7 @@ final class MessagingTest {
         namesOfParticipants.add("Bob");
     }
 
-    private Message duplicatePaulsMessage() {
-        return new Message("Paul", "Bob", "How can I help you?");
+    private MessageResponse duplicatePaulsMessage() {
+        return new MessageResponse("Paul", "Bob", "How can I help you?");
     }
 }

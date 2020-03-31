@@ -3,6 +3,8 @@ package com.allegory.sparrow.web.messaging;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+
+import com.allegory.sparrow.web.messaging.persistence.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 final class ConversationsController {
     private ConversationsService conversationsService;
+    private final MessageRepository messageRepository;
     private final AtomicLong counter;
 
     /**
@@ -25,8 +28,10 @@ final class ConversationsController {
      *                             conversations controller will use.
      */
     @Autowired
-    ConversationsController(final ConversationsService conversationsService) {
+    ConversationsController(final ConversationsService conversationsService,
+                            final MessageRepository messageRepository) {
         this.conversationsService = conversationsService;
+        this.messageRepository = messageRepository;
         counter = new AtomicLong(conversationsService.lastIdUsed());
     }
 

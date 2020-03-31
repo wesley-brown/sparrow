@@ -5,10 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.allegory.sparrow.web.messaging.persistence.MessageRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 final class MessagingTest {
     private List<String> namesOfParticipants;
     private List<MessageResponse> paulAndBobsMessages;
@@ -17,6 +22,9 @@ final class MessagingTest {
     private List<ConversationResponse> initialConversations;
     private ConversationsService conversationsService;
     private ConversationsController conversationsController;
+
+    @Autowired
+    private MessageRepository messageRepository;
 
     @BeforeEach
     void setUp() {
@@ -30,8 +38,8 @@ final class MessagingTest {
         initialConversations = new ArrayList<>();
         initialConversations.add(paulAndBobsConversation);
         conversationsService = new ConversationsService(initialConversations);
-        conversationsController =
-            new ConversationsController(conversationsService);
+        conversationsController = new ConversationsController(
+            conversationsService, messageRepository);
     }
 
     @AfterEach

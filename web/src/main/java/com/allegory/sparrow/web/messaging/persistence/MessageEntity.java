@@ -11,6 +11,7 @@ public final class MessageEntity {
     @GeneratedValue
     private Long id;
 
+    private Long conversationId;
     private String senderName;
     private String receiverName;
     private String content;
@@ -24,7 +25,19 @@ public final class MessageEntity {
         this.content = content;
     }
 
-    public Long id() {
+    public Long getId() {
         return id;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    public String getContent() {
+        return content;
     }
 }

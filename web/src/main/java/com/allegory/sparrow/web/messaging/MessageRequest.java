@@ -1,5 +1,8 @@
 package com.allegory.sparrow.web.messaging;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * A request to send a message.
  */
@@ -17,8 +20,10 @@ final class MessageRequest {
      *                     message is to be sent to.
      * @param content the content of the message that is being requested.
      */
-    MessageRequest(final String senderName, final String receiverName,
-                   final String content) {
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+    MessageRequest(@JsonProperty("senderName") final String senderName,
+                   @JsonProperty("receiverName") final String receiverName,
+                   @JsonProperty("content") final String content) {
         this.senderName = senderName;
         this.receiverName = receiverName;
         this.content = content;

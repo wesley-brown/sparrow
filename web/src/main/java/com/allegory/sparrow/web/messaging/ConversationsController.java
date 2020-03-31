@@ -2,42 +2,35 @@ package com.allegory.sparrow.web.messaging;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
-import com.allegory.sparrow.web.messaging.persistence.MessageRepository;
+import com.allegory.sparrow.web.messaging.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * A REST controller for conversation endpoints.
  */
 @RestController
 final class ConversationsController {
-    private ConversationsService conversationsService;
+    private final ParticipantRepository participantRepository;
+    private final ConversationRepository conversationRepository;
     private final MessageRepository messageRepository;
-    private final AtomicLong counter;
 
     /**
      * Create a new conversations controller.
-     *
-     * @param conversationsService the conversations service that the new
-     *                             conversations controller will use.
      */
     @Autowired
-    ConversationsController(final ConversationsService conversationsService,
+    ConversationsController(final ParticipantRepository participantRepository,
+                            final ConversationRepository conversationRepository,
                             final MessageRepository messageRepository) {
-        this.conversationsService = conversationsService;
+        this.participantRepository = participantRepository;
+        this.conversationRepository = conversationRepository;
         this.messageRepository = messageRepository;
-        counter = new AtomicLong(conversationsService.lastIdUsed());
     }
 
     @GetMapping("/api/v1/conversations")
-    List<ConversationResponse> getAllConversations() {
-        return conversationsService.conversations();
+    Iterable<ConversationEntity> getAllConversations() {
+        return conversationRepository.findAll();
     }
 
     /**
@@ -47,8 +40,8 @@ final class ConversationsController {
      * @return the conversation with the given ID.
      */
     @GetMapping("/api/v1/conversations/{id}")
-    ConversationResponse getConversationById(@PathVariable final long id) {
-        return conversationsService.findById(id);
+    ConversationEntity getConversationById(@PathVariable final long id) {
+        return conversationRepository.findById(id).get();
     }
 
     /**
@@ -58,26 +51,33 @@ final class ConversationsController {
      * @return the posted conversation.
      */
     @PostMapping("/api/v1/conversations")
-    ConversationResponse postConversation(
+    ConversationEntity postConversation(
         @RequestBody final ConversationRequest conversation) {
-        final ConversationResponse createdConversation =
-            new ConversationResponse(
-                counter.incrementAndGet(),
-                conversation.participantNames(),
-                new ArrayList<>()
-        );
-        final ConversationResponse addedConversation =
-            conversationsService.addConversation(createdConversation);
-        return addedConversation;
+        final List<ParticipantEntity> participantEntities = new ArrayList<>();
+        for (final String participantName : conversation.participantNames()) {
+            if (participantRepository.findByName(participantName) == null) {
+                final ParticipantEntity participantEntity = new ParticipantEntity(participantName);
+                participantRepository.save(participantEntity);
+                participantEntities.add(participantEntity);
+            } else {
+                participantEntities.add(participantRepository.findByName(participantName));
+            }
+        }
+        final List<MessageEntity> messageEntities = new ArrayList<>();
+        final ConversationEntity conversationEntity = new ConversationEntity(participantEntities, messageEntities);
+        return conversationRepository.save(conversationEntity);
     }
 
-    MessageResponse postMessage(final Long conversationId,
-                                final MessageRequest message) {
-        return new MessageResponse(
-            counter.incrementAndGet(),
-            message.senderName(),
-            message.receiverName(),
-            message.content()
-        );
+    @PostMapping("/api/v1/conversations/{conversationId}/messages")
+    MessageEntity postMessage(@PathVariable final Long conversationId,
+                              @RequestBody final MessageRequest message) {
+        final MessageEntity messageEntity = new MessageEntity(
+            message.senderName(), message.receiverName(), message.content());
+        final ConversationEntity conversationEntity =
+            conversationRepository.findById(conversationId).get();
+        conversationEntity.getMessages().add(messageEntity);
+        messageRepository.save(messageEntity);
+        conversationRepository.save(conversationEntity);
+        return messageEntity;
     }
 }

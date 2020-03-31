@@ -1,0 +1,112 @@
+swagger: "2.0"
+info:
+  description: "Sparrow API"
+  version: "1.0.0"
+  title: "Sparrow API"
+
+schemes:
+- "http"
+  
+paths:
+  /properties:
+    get:
+      summary: "Get all properties"
+      responses:
+        200:
+          description: "Gets all properties"
+          schema:
+            $ref: "#/definitions/Property"
+            
+  /loan-officers:
+    get:
+      summary: "Get all loan officers"
+      responses:
+        200:
+          description: "Gets all loan officers"
+          schema:
+            $ref: "#/definitions/LoanOfficer"
+  /conversations:
+    get:
+      summary: "Get all conversations"
+      responses:
+        200:
+          description: "Gets all conversations"
+          schema:
+            $ref: "#/definitions/Conversation"
+    post:
+      summary: "Post a new conversation"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "participant names"
+        required: true
+        schema:
+          type: "array"
+          items:
+            type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Conversation"
+  /conversations/{conversationId}/messages:
+    post:
+      summary: "Post a new message to this conversation"
+      parameters:
+      - name: "conversationId"
+        in: "path"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "body"
+        schema:
+          $ref: "#/definitions/MessagePost"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Message"
+definitions:
+  Conversation:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      participants:
+        type: "array"
+        items:
+          type: "string"
+      messages:
+        $ref: "#/definitions/Message"
+  LoanOfficer:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      rating:
+        type: "integer"
+  Message:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      senderName:
+        type: "string"
+      receiverName:
+        type: "string"
+      content:
+        type: "string"
+  MessagePost:
+    type: "object"
+    properties:
+      senderName:
+        type: "string"
+      receiverName:
+        type: "string"
+      content:
+        type: "string"
+  Property:
+    type: "object"
+    properties:
+      propertyAddress:
+        type: "string"

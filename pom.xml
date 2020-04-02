@@ -16,6 +16,7 @@
 
 	<modules>
 		<module>domain</module>
+		<module>app</module>
 		<module>web</module>
 	</modules>
 

@@ -1,9 +1,12 @@
 package com.allegory.sparrow.domain.messaging;
 
+import java.util.UUID;
+
 /**
  * A participant in a conversation.
  */
 public final class Participant {
+    private final UUID uuid;
     private final String name;
 
     /**
@@ -12,6 +15,7 @@ public final class Participant {
      * @param name the name of the participant.
      */
     public Participant(final String name) {
+        this.uuid = UUID.randomUUID();
         this.name = name;
     }
 
@@ -22,7 +26,7 @@ public final class Participant {
     @Override
     public int hashCode() {
         // Uses the Effective Java 3 Item 11 algorithm
-        int result = name.hashCode();
+        int result = uuid.hashCode();
         return result;
     }
 
@@ -35,11 +39,11 @@ public final class Participant {
             return false;
         }
         final Participant participant = (Participant) other;
-        return participant.name.equals(this.name);
+        return participant.uuid == this.uuid;
     }
 
     @Override
     public String toString() {
-        return "<name=" + name + ">";
+        return "<uuid=" + uuid + ",name=" + name + ">";
     }
 }

@@ -2,6 +2,7 @@ package com.allegory.sparrow.domain.messaging;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,15 +38,10 @@ final class MessagingTest {
     }
 
     @Test
-    void identical_participants_have_same_hash_codes() {
+    void identical_participants_are_unique() {
+        final Participant paul = new Participant("Paul");
         final Participant paulsClone = new Participant("Paul");
-        assertEquals(paul.hashCode(), paulsClone.hashCode());
-    }
-
-    @Test
-    void identical_participants_are_equal() {
-        final Participant paulsClone = new Participant("Paul");
-        assertEquals(paul, paulsClone);
+        assertNotEquals(paul, paulsClone);
     }
 
     @Test

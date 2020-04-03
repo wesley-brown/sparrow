@@ -45,6 +45,15 @@ final class MessagingTest {
     }
 
     @Test
+    void identical_messages_are_unique() {
+        final Participant paul = new Participant("Paul");
+        final Participant bob = new Participant("Bob");
+        final Message paulsMessage = new Message(paul, bob, "How can I help you?");
+        final Message paulsDuplicateMessage = new Message(paul, bob, "How can I help you?");
+        assertNotEquals(paulsMessage, paulsDuplicateMessage);
+    }
+
+    @Test
     void identical_delivered_messages_have_same_hash_codes() {
         final DeliveredMessage paulsDuplicateMessage =
             new DeliveredMessage(paul, bob, "How can I help you?");

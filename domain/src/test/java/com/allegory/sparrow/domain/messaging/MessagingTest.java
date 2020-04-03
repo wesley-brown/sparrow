@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -65,6 +66,17 @@ final class MessagingTest {
         final DeliveredMessage paulsDuplicateMessage =
             new DeliveredMessage(paul, bob, "How can I help you?");
         assertEquals(paulsMessage, paulsDuplicateMessage);
+    }
+
+    @Test
+    void including_a_message_in_a_conversation_adds_it_to_that_conversations_messages() {
+        final Participant paul = new Participant("Paul");
+        final Participant bob = new Participant("Bob");
+        final Conversation paulAndBobsConversation =
+            new Conversation(Arrays.asList(paul, bob));
+        final Message paulsMessage = new Message(paul, bob, "How can I help you?");
+        paulAndBobsConversation.includeMessage(paulsMessage);
+        assertThat(paulAndBobsConversation.messages()).contains(paulsMessage);
     }
 
     @Test

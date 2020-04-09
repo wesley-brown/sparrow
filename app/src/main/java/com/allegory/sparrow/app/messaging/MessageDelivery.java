@@ -7,6 +7,7 @@ import com.allegory.sparrow.domain.messaging.Message;
  * A message delivery.
  */
 public final class MessageDelivery {
+    private final Conversation conversation;
 
     /**
      * Create a new message delivery for a conversation.
@@ -21,6 +22,7 @@ public final class MessageDelivery {
     }
 
     private MessageDelivery(final Conversation conversation) {
+        this.conversation = conversation;
     }
 
     /**
@@ -30,6 +32,6 @@ public final class MessageDelivery {
      * @return the delivered message.
      */
     public Message deliverMessage(final Message message) {
-        return message;
+        return conversation.includeMessage(message);
     }
 }

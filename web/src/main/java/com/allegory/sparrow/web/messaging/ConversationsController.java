@@ -3,7 +3,12 @@ package com.allegory.sparrow.web.messaging;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.allegory.sparrow.web.messaging.persistence.*;
+import com.allegory.sparrow.app.messaging.persistence.ParticipantEntity;
+import com.allegory.sparrow.app.messaging.persistence.ParticipantRepository;
+import com.allegory.sparrow.web.messaging.persistence.ConversationEntity;
+import com.allegory.sparrow.web.messaging.persistence.ConversationRepository;
+import com.allegory.sparrow.web.messaging.persistence.MessageEntity;
+import com.allegory.sparrow.web.messaging.persistence.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

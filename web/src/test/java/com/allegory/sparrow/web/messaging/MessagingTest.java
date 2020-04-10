@@ -7,7 +7,7 @@
 //import java.util.List;
 //
 //import com.allegory.sparrow.web.messaging.persistence.ConversationRepository;
-//import com.allegory.sparrow.web.messaging.persistence.MessageRepository;
+//import com.allegory.sparrow.app.messaging.persistence.MessageRepository;
 //import com.allegory.sparrow.web.messaging.persistence.ParticipantRepository;
 //import org.junit.jupiter.api.AfterEach;
 //import org.junit.jupiter.api.BeforeEach;

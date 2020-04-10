@@ -1,8 +1,9 @@
-package com.allegory.sparrow.web.messaging.persistence;
+package com.allegory.sparrow.app.messaging.persistence;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public final class MessageEntity {
@@ -11,17 +12,20 @@ public final class MessageEntity {
     @GeneratedValue
     private Long id;
 
+    @OneToOne
+    private ParticipantEntity sender;
+    @OneToOne
+    private ParticipantEntity receiver;
     private Long conversationId;
-    private String senderName;
-    private String receiverName;
     private String content;
 
     private MessageEntity() {} // For JPA
 
-    public MessageEntity(final String senderName, final String receiverName,
+    public MessageEntity(final ParticipantEntity sender,
+                         final ParticipantEntity receiver,
                          final String content) {
-        this.senderName = senderName;
-        this.receiverName = receiverName;
+        this.sender = sender;
+        this.receiver = receiver;
         this.content = content;
     }
 
@@ -29,12 +33,12 @@ public final class MessageEntity {
         return id;
     }
 
-    public String getSenderName() {
-        return senderName;
+    public ParticipantEntity getSender() {
+        return sender;
     }
 
-    public String getReceiverName() {
-        return receiverName;
+    public ParticipantEntity getReceiver() {
+        return receiver;
     }
 
     public String getContent() {

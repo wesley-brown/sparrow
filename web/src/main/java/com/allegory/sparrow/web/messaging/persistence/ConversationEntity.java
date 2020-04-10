@@ -1,5 +1,6 @@
 package com.allegory.sparrow.web.messaging.persistence;
 
+import com.allegory.sparrow.app.messaging.persistence.MessageEntity;
 import com.allegory.sparrow.app.messaging.persistence.ParticipantEntity;
 import java.util.List;
 import javax.persistence.Entity;

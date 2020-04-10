@@ -7,8 +7,8 @@ import com.allegory.sparrow.app.messaging.persistence.ParticipantEntity;
 import com.allegory.sparrow.app.messaging.persistence.ParticipantRepository;
 import com.allegory.sparrow.web.messaging.persistence.ConversationEntity;
 import com.allegory.sparrow.web.messaging.persistence.ConversationRepository;
-import com.allegory.sparrow.web.messaging.persistence.MessageEntity;
-import com.allegory.sparrow.web.messaging.persistence.MessageRepository;
+import com.allegory.sparrow.app.messaging.persistence.MessageEntity;
+import com.allegory.sparrow.app.messaging.persistence.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -76,8 +76,12 @@ final class ConversationsController {
     @PostMapping("/api/v1/conversations/{conversationId}/messages")
     MessageEntity postMessage(@PathVariable final Long conversationId,
                               @RequestBody final MessageRequest message) {
-        final MessageEntity messageEntity = new MessageEntity(
-            message.senderName(), message.receiverName(), message.content());
+        final ParticipantEntity sender =
+            participantRepository.findByName(message.senderName());
+        final ParticipantEntity receiver =
+            participantRepository.findByName(message.receiverName());
+        final MessageEntity messageEntity =
+            new MessageEntity(sender, receiver, message.content());
         final ConversationEntity conversationEntity =
             conversationRepository.findById(conversationId).get();
         conversationEntity.getMessages().add(messageEntity);

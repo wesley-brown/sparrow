@@ -1,12 +1,10 @@
-package com.allegory.sparrow.web.messaging.persistence;
+package com.allegory.sparrow.app.messaging.persistence;
 
-import com.allegory.sparrow.app.messaging.persistence.MessageEntity;
-import com.allegory.sparrow.app.messaging.persistence.ParticipantEntity;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 public final class ConversationEntity {

@@ -1,39 +1,52 @@
 package com.allegory.sparrow.web.messaging;
 
-import com.allegory.sparrow.app.messaging.persistence.ConversationEntity;
+import com.allegory.sparrow.app.messaging.persistence.PersistedConversation;
 import com.allegory.sparrow.app.messaging.persistence.ConversationRepository;
-import com.allegory.sparrow.app.messaging.persistence.ParticipantEntity;
+import com.allegory.sparrow.app.messaging.persistence.PersistedParticipant;
 import com.allegory.sparrow.app.messaging.persistence.ParticipantRepository;
-import com.allegory.sparrow.app.messaging.persistence.MessageEntity;
+import com.allegory.sparrow.app.messaging.persistence.PersistedMessage;
 import com.allegory.sparrow.app.messaging.persistence.MessageRepository;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.allegory.sparrow.app.messaging.sendmessage.Sender;
+import com.allegory.sparrow.app.messaging.sendmessage.UndeliveredMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * A REST controller for conversation endpoints.
+ *
+ * Dependency injection will give a ConversationsController the MessageDelivery
+ * interactor that it requires.
  */
 @RestController
-final class ConversationsController {
-    private final ParticipantRepository participantRepository;
+final class ConversationsController
+{
+    private final Sender sender;
     private final ConversationRepository conversationRepository;
+    private final ParticipantRepository participantRepository;
     private final MessageRepository messageRepository;
 
     /**
      * Create a new conversations controller.
      */
     @Autowired
-    ConversationsController(final ParticipantRepository participantRepository,
-                            final ConversationRepository conversationRepository,
-                            final MessageRepository messageRepository) {
-        this.participantRepository = participantRepository;
+    ConversationsController(
+        final Sender sender,
+        final ConversationRepository conversationRepository,
+        final ParticipantRepository participantRepository,
+        final MessageRepository messageRepository)
+    {
+        this.sender = sender;
         this.conversationRepository = conversationRepository;
+        this.participantRepository = participantRepository;
         this.messageRepository = messageRepository;
     }
 
     @GetMapping("/api/v1/conversations")
-    Iterable<ConversationEntity> getAllConversations() {
+    Iterable<PersistedConversation> getAllConversations()
+    {
         return conversationRepository.findAll();
     }
 
@@ -44,7 +57,8 @@ final class ConversationsController {
      * @return the conversation with the given ID.
      */
     @GetMapping("/api/v1/conversations/{id}")
-    ConversationEntity getConversationById(@PathVariable final long id) {
+    PersistedConversation getConversationById(@PathVariable final long id)
+    {
         return conversationRepository.findById(id).get();
     }
 
@@ -55,37 +69,35 @@ final class ConversationsController {
      * @return the posted conversation.
      */
     @PostMapping("/api/v1/conversations")
-    ConversationEntity postConversation(
-        @RequestBody final ConversationRequest conversation) {
-        final List<ParticipantEntity> participantEntities = new ArrayList<>();
+    PersistedConversation postConversation(
+        @RequestBody final ConversationRequest conversation)
+    {
+        final List<PersistedParticipant> participantEntities = new ArrayList<>();
         for (final String participantName : conversation.participantNames()) {
             if (participantRepository.findByName(participantName) == null) {
-                final ParticipantEntity participantEntity = new ParticipantEntity(participantName);
-                participantRepository.save(participantEntity);
-                participantEntities.add(participantEntity);
+                final PersistedParticipant persistedParticipant = new PersistedParticipant(participantName);
+                participantRepository.save(persistedParticipant);
+                participantEntities.add(persistedParticipant);
             } else {
                 participantEntities.add(participantRepository.findByName(participantName));
             }
         }
-        final List<MessageEntity> messageEntities = new ArrayList<>();
-        final ConversationEntity conversationEntity = new ConversationEntity(participantEntities, messageEntities);
-        return conversationRepository.save(conversationEntity);
+        final List<PersistedMessage> messageEntities = new ArrayList<>();
+        final PersistedConversation persistedConversation = new PersistedConversation(participantEntities, messageEntities);
+        return conversationRepository.save(persistedConversation);
     }
 
     @PostMapping("/api/v1/conversations/{conversationId}/messages")
-    MessageEntity postMessage(@PathVariable final Long conversationId,
-                              @RequestBody final MessageRequest message) {
-        final ParticipantEntity sender =
-            participantRepository.findByName(message.senderName());
-        final ParticipantEntity receiver =
-            participantRepository.findByName(message.receiverName());
-        final MessageEntity messageEntity =
-            new MessageEntity(sender, receiver, message.content());
-        final ConversationEntity conversationEntity =
-            conversationRepository.findById(conversationId).get();
-        conversationEntity.getMessages().add(messageEntity);
-        messageRepository.save(messageEntity);
-        conversationRepository.save(conversationEntity);
-        return messageEntity;
+    PersistedMessage postMessage(
+        @PathVariable final Long conversationId,
+        @RequestBody final MessageRequest message)
+    {
+        final UndeliveredMessage undeliveredMessage = new UndeliveredMessage(
+            conversationId,
+            message.senderName(),
+            message.receiverName(),
+            message.content());
+        sender.deliverMessage(undeliveredMessage);
+        return null;
     }
 }

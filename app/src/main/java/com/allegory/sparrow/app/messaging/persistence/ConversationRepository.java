@@ -5,5 +5,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ConversationRepository extends
-        PagingAndSortingRepository<ConversationEntity, Long> {
+    PagingAndSortingRepository<PersistedConversation, Long>
+{
 }

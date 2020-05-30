@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ParticipantRepository extends
-    CrudRepository<ParticipantEntity, Long> {
-    ParticipantEntity findByName(final String name);
+    CrudRepository<PersistedParticipant, Long>
+{
+    PersistedParticipant findByName(final String name);
 }

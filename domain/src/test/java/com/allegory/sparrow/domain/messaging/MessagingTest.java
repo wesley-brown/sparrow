@@ -21,7 +21,9 @@ final class MessagingTest {
         paul = new Participant("Paul");
         bob = new Participant("Bob");
         paulsMessage = new Message(paul, bob, "How can I help you?");
-        paulAndBobsConversation = new Conversation(Arrays.asList(paul, bob));
+        paulAndBobsConversation =
+            Conversation
+            .betweenParticipants(Arrays.asList(paul, bob));
     }
 
     @AfterEach

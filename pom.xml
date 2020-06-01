@@ -18,6 +18,7 @@
 		<module>domain</module>
 		<module>app</module>
 		<module>web</module>
+		<module>persistence</module>
 	</modules>
 
 	<build>

@@ -1,10 +1,10 @@
 package com.allegory;
 
-import com.allegory.sparrow.app.messaging.persistence.ConversationRepository;
-import com.allegory.sparrow.app.messaging.persistence.MessageRepository;
-import com.allegory.sparrow.app.messaging.persistence.ParticipantRepository;
 import com.allegory.sparrow.app.messaging.sendmessage.InstantMessenger;
 import com.allegory.sparrow.app.messaging.sendmessage.Sender;
+import com.allegory.sparrow.persistence.messaging.sendmessage.ConversationRepository;
+import com.allegory.sparrow.persistence.messaging.sendmessage.MessageRepository;
+import com.allegory.sparrow.persistence.messaging.sendmessage.ParticipantRepository;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.Bean;

@@ -1,9 +1,9 @@
 package com.allegory.sparrow.app.messaging.sendmessage;
 
-import com.allegory.sparrow.app.messaging.persistence.*;
 import com.allegory.sparrow.domain.messaging.Conversation;
 import com.allegory.sparrow.domain.messaging.Message;
 import com.allegory.sparrow.domain.messaging.Participant;
+import com.allegory.sparrow.persistence.messaging.sendmessage.*;
 
 /**
  * Delivers messages.

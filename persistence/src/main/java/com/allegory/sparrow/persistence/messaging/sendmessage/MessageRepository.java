@@ -1,4 +1,4 @@
-package com.allegory.sparrow.app.messaging.persistence;
+package com.allegory.sparrow.persistence.messaging.sendmessage;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

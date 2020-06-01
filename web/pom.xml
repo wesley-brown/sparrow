@@ -53,6 +53,11 @@
 			<artifactId>sparrow-app</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.allegory.sparrow</groupId>
+			<artifactId>sparrow-persistence</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>

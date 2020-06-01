@@ -1,16 +1,11 @@
-package com.allegory.sparrow.web.messaging;
+package com.allegory.sparrow.web.messaging.sendmessage;
 
-import com.allegory.sparrow.app.messaging.persistence.PersistedConversation;
-import com.allegory.sparrow.app.messaging.persistence.ConversationRepository;
-import com.allegory.sparrow.app.messaging.persistence.PersistedParticipant;
-import com.allegory.sparrow.app.messaging.persistence.ParticipantRepository;
-import com.allegory.sparrow.app.messaging.persistence.PersistedMessage;
-import com.allegory.sparrow.app.messaging.persistence.MessageRepository;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.allegory.sparrow.app.messaging.sendmessage.Sender;
 import com.allegory.sparrow.app.messaging.sendmessage.UndeliveredMessage;
+import com.allegory.sparrow.persistence.messaging.sendmessage.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

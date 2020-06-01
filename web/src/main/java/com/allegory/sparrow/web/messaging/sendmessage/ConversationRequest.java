@@ -1,4 +1,4 @@
-package com.allegory.sparrow.web.messaging;
+package com.allegory.sparrow.web.messaging.sendmessage;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

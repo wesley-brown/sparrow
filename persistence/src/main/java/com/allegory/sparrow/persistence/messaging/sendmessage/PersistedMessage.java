@@ -1,7 +1,8 @@
-package com.allegory.sparrow.app.messaging.persistence;
+package com.allegory.sparrow.persistence.messaging.sendmessage;
 
 import com.allegory.sparrow.domain.messaging.Message;
 import com.allegory.sparrow.domain.messaging.Participant;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;

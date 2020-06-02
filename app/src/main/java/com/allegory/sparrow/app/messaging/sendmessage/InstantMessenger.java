@@ -4,6 +4,7 @@ import com.allegory.sparrow.domain.messaging.Conversation;
 import com.allegory.sparrow.domain.messaging.Message;
 import com.allegory.sparrow.domain.messaging.Participant;
 import com.allegory.sparrow.persistence.messaging.sendmessage.*;
+import java.util.UUID;
 
 /**
  * Delivers messages.
@@ -48,7 +49,8 @@ public final class InstantMessenger implements Sender
             participantRepository
             .findByParticipantId(undeliveredMessage.receiverId())
             .participant();
-        final Message message = new Message(
+        final Message message = Message.withIdFromSenderToReceiverWithContent(
+            UUID.randomUUID(),
             sender,
             recipient,
             undeliveredMessage.content());
@@ -60,6 +62,7 @@ public final class InstantMessenger implements Sender
             participantRepository
             .findByParticipantId(recipient.id());
         final PersistedMessage persistedMessage = new PersistedMessage(
+            message.id(),
             persistedSender,
             persistedReceiver,
             includedMessage.content());

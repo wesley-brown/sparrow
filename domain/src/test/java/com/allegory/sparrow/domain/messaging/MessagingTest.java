@@ -22,7 +22,12 @@ final class MessagingTest
     {
         paul = Participant.withIdAndName(UUID.randomUUID(), "Paul");
         bob = Participant.withIdAndName(UUID.randomUUID(), "Bob");
-        paulsMessage = new Message(paul, bob, "How can I help you?");
+        paulsMessage = Message.withIdFromSenderToReceiverWithContent(
+            UUID.randomUUID(),
+            paul,
+            bob,
+            "How can I help you?"
+        );
         paulAndBobsConversation =
             Conversation
             .betweenParticipants(Arrays.asList(paul, bob));
@@ -49,7 +54,11 @@ final class MessagingTest
     void identical_messages_are_unique()
     {
         final Message paulsDuplicateMessage =
-            new Message(paul, bob, "How can I help you?");
+            Message.withIdFromSenderToReceiverWithContent(
+                UUID.randomUUID(),
+                paul,
+                bob,
+                "How can I help you?");
         assertNotEquals(paulsMessage, paulsDuplicateMessage);
     }
 

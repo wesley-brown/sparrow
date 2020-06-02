@@ -2,7 +2,7 @@ package com.allegory.sparrow.persistence.messaging.sendmessage;
 
 import com.allegory.sparrow.domain.messaging.Message;
 import com.allegory.sparrow.domain.messaging.Participant;
-
+import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,6 +14,7 @@ public final class PersistedMessage
     @Id
     @GeneratedValue
     private Long id;
+    private UUID messageId;
 
     @OneToOne
     private PersistedParticipant sender;
@@ -24,16 +25,13 @@ public final class PersistedMessage
 
     private PersistedMessage() {} // For JPA
 
-    public static PersistedMessage fromMessage(final Message message)
-    {
-        return new PersistedMessage();
-    }
-
     public PersistedMessage(
+        final UUID messageId,
         final PersistedParticipant sender,
         final PersistedParticipant receiver,
         final String content)
     {
+        this.messageId = messageId;
         this.sender = sender;
         this.receiver = receiver;
         this.content = content;
@@ -42,6 +40,11 @@ public final class PersistedMessage
     public Long getId()
     {
         return id;
+    }
+
+    public UUID getMessageId()
+    {
+        return messageId;
     }
 
     public PersistedParticipant getSender()
@@ -62,6 +65,11 @@ public final class PersistedMessage
     {
         final Participant sender = getSender().participant();
         final Participant receiver = getReceiver().participant();
-        return new Message(sender, receiver, getContent());
+        return Message.withIdFromSenderToReceiverWithContent(
+            getMessageId(),
+            sender,
+            receiver,
+            getContent()
+        );
     }
 }

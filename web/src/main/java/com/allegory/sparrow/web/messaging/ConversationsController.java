@@ -1,7 +1,5 @@
-package com.allegory.sparrow.web.messaging.sendmessage;
+package com.allegory.sparrow.web.messaging;
 
-import com.allegory.sparrow.app.messaging.sendmessage.Sender;
-import com.allegory.sparrow.app.messaging.sendmessage.UndeliveredMessage;
 import com.allegory.sparrow.persistence.messaging.sendmessage.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,30 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * A REST controller for conversation endpoints.
- *
- * Dependency injection will give a ConversationsController the MessageDelivery
- * interactor that it requires.
+ * A REST controller for various conversations endpoints.
  */
 @RestController
-final class ConversationsController
-{
-    private final Sender sender;
+final class ConversationsController {
     private final ConversationRepository conversationRepository;
     private final ParticipantRepository participantRepository;
     private final MessageRepository messageRepository;
 
-    /**
-     * Create a new conversations controller.
-     */
     @Autowired
     ConversationsController(
-        final Sender sender,
-        final ConversationRepository conversationRepository,
-        final ParticipantRepository participantRepository,
-        final MessageRepository messageRepository)
+            final ConversationRepository conversationRepository,
+            final ParticipantRepository participantRepository,
+            final MessageRepository messageRepository)
     {
-        this.sender = sender;
         this.conversationRepository = conversationRepository;
         this.participantRepository = participantRepository;
         this.messageRepository = messageRepository;
@@ -65,7 +53,7 @@ final class ConversationsController
      */
     @PostMapping("/api/v1/conversations")
     PersistedConversation postConversation(
-        @RequestBody final ConversationRequest conversation)
+            @RequestBody final ConversationRequest conversation)
     {
         final List<PersistedParticipant> participantEntities = new ArrayList<>();
         for (final String participantName : conversation.participantNames()) {
@@ -79,24 +67,10 @@ final class ConversationsController
         }
         final List<PersistedMessage> messageEntities = new ArrayList<>();
         final PersistedConversation persistedConversation =
-            new PersistedConversation(
-                UUID.randomUUID(),
-                participantEntities,
-                messageEntities);
+                new PersistedConversation(
+                        UUID.randomUUID(),
+                        participantEntities,
+                        messageEntities);
         return conversationRepository.save(persistedConversation);
-    }
-
-    @PostMapping("/api/v1/conversations/{conversationId}/messages")
-    PersistedMessage postMessage(
-        @PathVariable final UUID conversationId,
-        @RequestBody final SendMessageRequest sendMessageRequest)
-    {
-        final UndeliveredMessage undeliveredMessage = new UndeliveredMessage(
-            conversationId,
-            sendMessageRequest.senderId(),
-            sendMessageRequest.receiverId(),
-            sendMessageRequest.content());
-        sender.deliverMessage(undeliveredMessage);
-        return null;
     }
 }

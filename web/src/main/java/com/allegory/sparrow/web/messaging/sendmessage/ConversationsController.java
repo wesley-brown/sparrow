@@ -88,7 +88,7 @@ final class ConversationsController
 
     @PostMapping("/api/v1/conversations/{conversationId}/messages")
     PersistedMessage postMessage(
-        @PathVariable final Long conversationId,
+        @PathVariable final UUID conversationId,
         @RequestBody final SendMessageRequest sendMessageRequest)
     {
         final UndeliveredMessage undeliveredMessage = new UndeliveredMessage(

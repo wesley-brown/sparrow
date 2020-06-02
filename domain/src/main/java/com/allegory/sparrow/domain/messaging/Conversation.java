@@ -61,6 +61,11 @@ public final class Conversation
         this.messages = new ArrayList<>(messages);
     }
 
+    public UUID id()
+    {
+        return id;
+    }
+
     public List<Participant> participants()
     {
         return new ArrayList<>(participants);

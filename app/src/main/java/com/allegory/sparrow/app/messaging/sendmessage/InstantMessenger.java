@@ -31,15 +31,9 @@ public final class InstantMessenger implements Sender
     @Override
     public void deliverMessage(UndeliveredMessage undeliveredMessage)
     {
-        final PersistedConversation persistedConversation =
-            conversationRepository
-            .findById(undeliveredMessage
-            .conversationId())
-            .get();
         final Conversation conversation =
             conversationRepository
-            .findById(undeliveredMessage.conversationId())
-            .get()
+            .findByConversationId(undeliveredMessage.conversationId())
             .conversation();
         final Participant sender =
             participantRepository
@@ -66,11 +60,14 @@ public final class InstantMessenger implements Sender
             persistedSender,
             persistedReceiver,
             includedMessage.content());
+        final PersistedConversation persistedConversation =
+            conversationRepository
+            .findByConversationId(undeliveredMessage.conversationId());
         persistedConversation.getMessages().add(persistedMessage);
         messageRepository.save(persistedMessage);
         conversationRepository.save(persistedConversation);
         final DeliveredMessage deliveredMessage = new DeliveredMessage(
-            persistedConversation.getId(),
+            conversation.id(),
             sender.id(),
             recipient.id(),
             message.content());

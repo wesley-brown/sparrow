@@ -7,13 +7,13 @@ import java.util.UUID;
  */
 public class DeliveredMessage
 {
-    private final long conversationId;
+    private final UUID conversationId;
     private final UUID senderId;
     private final UUID receiverId;
     private final String content;
 
     public DeliveredMessage(
-        final long conversationId,
+        final UUID conversationId,
         final UUID senderId,
         final UUID receiverId,
         final String content)
@@ -24,7 +24,7 @@ public class DeliveredMessage
         this.content = content;
     }
 
-    public long conversationId()
+    public UUID conversationId()
     {
         return conversationId;
     }

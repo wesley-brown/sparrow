@@ -40,10 +40,14 @@ public final class InstantMessenger implements Sender
             .findById(undeliveredMessage.conversationId())
             .get()
             .conversation();
-        final Participant sender = new Participant(
-            undeliveredMessage.senderName());
-        final Participant recipient = new Participant(
-            undeliveredMessage.receiverName());
+        final Participant sender =
+            participantRepository
+            .findByParticipantId(undeliveredMessage.senderId())
+            .participant();
+        final Participant recipient =
+            participantRepository
+            .findByParticipantId(undeliveredMessage.receiverId())
+            .participant();
         final Message message = new Message(
             sender,
             recipient,
@@ -51,10 +55,10 @@ public final class InstantMessenger implements Sender
         final Message includedMessage = conversation.includeMessage(message);
         final PersistedParticipant persistedSender =
             participantRepository
-            .findByName(sender.name());
+            .findByParticipantId(sender.id());
         final PersistedParticipant persistedReceiver =
             participantRepository
-            .findByName(recipient.name());
+            .findByParticipantId(recipient.id());
         final PersistedMessage persistedMessage = new PersistedMessage(
             persistedSender,
             persistedReceiver,
@@ -64,8 +68,8 @@ public final class InstantMessenger implements Sender
         conversationRepository.save(persistedConversation);
         final DeliveredMessage deliveredMessage = new DeliveredMessage(
             persistedConversation.getId(),
-            sender.name(),
-            recipient.name(),
+            sender.id(),
+            recipient.id(),
             message.content());
         if (receiver != null)
         {

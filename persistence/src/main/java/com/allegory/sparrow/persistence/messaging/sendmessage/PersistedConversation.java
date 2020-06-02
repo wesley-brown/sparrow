@@ -54,8 +54,7 @@ public final class PersistedConversation
         final List<Participant> participants = new ArrayList<>();
         for (final PersistedParticipant persistedParticipant : getParticipants())
         {
-            final String name = persistedParticipant.getName();
-            final Participant participant = new Participant(name);
+            final Participant participant = persistedParticipant.participant();
             participants.add(participant);
         }
 

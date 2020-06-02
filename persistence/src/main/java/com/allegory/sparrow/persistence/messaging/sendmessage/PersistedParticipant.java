@@ -1,7 +1,7 @@
 package com.allegory.sparrow.persistence.messaging.sendmessage;
 
 import com.allegory.sparrow.domain.messaging.Participant;
-
+import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +13,7 @@ public final class PersistedParticipant
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private UUID participantId;
     private String name;
 
     private PersistedParticipant() {}  // For JPA
@@ -20,17 +21,23 @@ public final class PersistedParticipant
     public static PersistedParticipant fromParticipant(
         final Participant participant)
     {
-        return new PersistedParticipant(participant.name());
+        return new PersistedParticipant(participant.id(), participant.name());
     }
 
-    public PersistedParticipant(final String name)
+    public PersistedParticipant(final UUID participantId, final String name)
     {
+        this.participantId = participantId;
         this.name = name;
     }
 
     public Long getId()
     {
         return id;
+    }
+
+    public UUID getParticipantId()
+    {
+        return participantId;
     }
 
     public String getName()
@@ -40,12 +47,13 @@ public final class PersistedParticipant
 
     public Participant participant()
     {
-        return new Participant(name);
+        return Participant.withIdAndName(participantId, name);
     }
 
     @Override
     public String toString()
     {
-        return "<id=" + id + ", name=" + name + ">";
+        return "<id=" + getId() + ", participantId= " + getParticipantId()
+            + ", name=" + name + ">";
     }
 }

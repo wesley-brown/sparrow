@@ -1,11 +1,11 @@
 package com.allegory.sparrow.web.messaging.sendmessage;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.allegory.sparrow.app.messaging.sendmessage.Sender;
 import com.allegory.sparrow.app.messaging.sendmessage.UndeliveredMessage;
 import com.allegory.sparrow.persistence.messaging.sendmessage.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -70,7 +70,7 @@ final class ConversationsController
         final List<PersistedParticipant> participantEntities = new ArrayList<>();
         for (final String participantName : conversation.participantNames()) {
             if (participantRepository.findByName(participantName) == null) {
-                final PersistedParticipant persistedParticipant = new PersistedParticipant(participantName);
+                final PersistedParticipant persistedParticipant = new PersistedParticipant(UUID.randomUUID(), participantName);
                 participantRepository.save(persistedParticipant);
                 participantEntities.add(persistedParticipant);
             } else {
@@ -85,13 +85,13 @@ final class ConversationsController
     @PostMapping("/api/v1/conversations/{conversationId}/messages")
     PersistedMessage postMessage(
         @PathVariable final Long conversationId,
-        @RequestBody final MessageRequest message)
+        @RequestBody final SendMessageRequest sendMessageRequest)
     {
         final UndeliveredMessage undeliveredMessage = new UndeliveredMessage(
             conversationId,
-            message.senderName(),
-            message.receiverName(),
-            message.content());
+            sendMessageRequest.senderId(),
+            sendMessageRequest.receiverId(),
+            sendMessageRequest.content());
         sender.deliverMessage(undeliveredMessage);
         return null;
     }

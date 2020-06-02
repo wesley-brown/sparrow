@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 public final class PersistedConversation
@@ -17,6 +18,7 @@ public final class PersistedConversation
     @Id
     @GeneratedValue
     private Long id;
+    private UUID conversationId;
 
     @OneToMany
     private List<PersistedParticipant> participants;
@@ -27,9 +29,11 @@ public final class PersistedConversation
     private PersistedConversation() {} // For JPA
 
     public PersistedConversation(
+        final UUID conversationId,
         final List<PersistedParticipant> participants,
         final List<PersistedMessage> messages)
     {
+        this.conversationId = conversationId;
         this.participants = participants;
         this.messages = messages;
     }
@@ -37,6 +41,11 @@ public final class PersistedConversation
     public Long getId()
     {
         return id;
+    }
+
+    public UUID getConversationId()
+    {
+        return conversationId;
     }
 
     public List<PersistedParticipant> getParticipants()
@@ -64,7 +73,8 @@ public final class PersistedConversation
             final Message message = persistedMessage.message();
             messages.add(message);
         }
-        return Conversation.betweenParticipantsWithMessages(
+        return Conversation.withIdBetweenParticipantsWithMessages(
+            getConversationId(),
             participants,
             messages);
     }

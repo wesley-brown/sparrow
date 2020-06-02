@@ -3,47 +3,60 @@ package com.allegory.sparrow.domain.messaging;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * A conversation between participants.
  */
 public final class Conversation
 {
+    private final UUID id;
     private final List<Participant> participants;
     private final List<Message> messages;
 
     /**
-     * Create a new conversation between the given participants that includes
-     * the given already existing messages.
+     * Create a new conversation with a given ID, between the given
+     * participants, that includes the given messages.
      *
-     * @param participants the participants the new conversation will be
-     *                     between.
-     * @param messages the already existing messages that the new conversation
-     *                 will include.
-     * @return
+     * @param id the unique identifier of the conversation.
+     * @param participants the participants of the conversation.
+     * @param messages the already existing messages of the conversation.
+     * @return the new conversation with the given ID, participants, and
+     *         messages.
      */
-    public static Conversation betweenParticipantsWithMessages(
+    public static Conversation withIdBetweenParticipantsWithMessages(
+        final UUID id,
         final List<Participant> participants,
         final List<Message> messages)
     {
-        return new Conversation(participants, messages);
-    }
-
-    public static Conversation betweenParticipants(
-        final List<Participant> participants)
-    {
-        return new Conversation(participants, Collections.emptyList());
+        return new Conversation(id, participants, messages);
     }
 
     /**
-     * Create a new conversation.
+     * Create a new conversation with a given ID, between the given
+     * participants, with no messages.
      *
-     * @param participants the participants of the new conversation.
+     * @param id the unique identifier of the conversation.
+     * @param participants the participants of the conversation.
+     * @return the new conversation with the given ID, participants, and no
+     *         messages.
      */
+    public static Conversation withIdBetweenParticipants(
+        final UUID id,
+        final List<Participant> participants)
+    {
+        return withIdBetweenParticipantsWithMessages(
+            id,
+            participants,
+            Collections.emptyList());
+    }
+
     private Conversation(
+        final UUID id,
         final List<Participant> participants,
         final List<Message> messages)
     {
+        this.id = id;
         this.participants = new ArrayList<>(participants);
         this.messages = new ArrayList<>(messages);
     }

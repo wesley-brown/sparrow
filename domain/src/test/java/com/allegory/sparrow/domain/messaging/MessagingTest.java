@@ -28,9 +28,9 @@ final class MessagingTest
             bob,
             "How can I help you?"
         );
-        paulAndBobsConversation =
-            Conversation
-            .betweenParticipants(Arrays.asList(paul, bob));
+        paulAndBobsConversation = Conversation.withIdBetweenParticipants(
+            UUID.randomUUID(),
+            Arrays.asList(paul, bob));
     }
 
     @AfterEach

@@ -78,7 +78,11 @@ final class ConversationsController
             }
         }
         final List<PersistedMessage> messageEntities = new ArrayList<>();
-        final PersistedConversation persistedConversation = new PersistedConversation(participantEntities, messageEntities);
+        final PersistedConversation persistedConversation =
+            new PersistedConversation(
+                UUID.randomUUID(),
+                participantEntities,
+                messageEntities);
         return conversationRepository.save(persistedConversation);
     }
 

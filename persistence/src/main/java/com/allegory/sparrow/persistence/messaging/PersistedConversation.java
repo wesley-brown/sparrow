@@ -1,4 +1,4 @@
-package com.allegory.sparrow.persistence.messaging.sendmessage;
+package com.allegory.sparrow.persistence.messaging;
 
 import com.allegory.sparrow.domain.messaging.Conversation;
 import com.allegory.sparrow.domain.messaging.Message;

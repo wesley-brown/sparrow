@@ -87,4 +87,11 @@ public final class Conversation
         messages.add(message);
         return message;
     }
+
+    @Override
+    public String toString()
+    {
+        return "<id=" + id() + ", participants=" + participants()
+            + ", messages=" + messages() + ">";
+    }
 }

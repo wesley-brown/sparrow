@@ -3,7 +3,6 @@ package com.allegory.sparrow.app.messaging.sendmessage;
 import com.allegory.sparrow.domain.messaging.Conversation;
 import com.allegory.sparrow.domain.messaging.Message;
 import com.allegory.sparrow.domain.messaging.Participant;
-import com.allegory.sparrow.persistence.messaging.sendmessage.*;
 import java.util.UUID;
 
 /**
@@ -12,68 +11,42 @@ import java.util.UUID;
 public final class InstantMessenger implements Sender
 {
     private final Receiver receiver;
-    private final ConversationRepository conversationRepository;
-    private final MessageRepository messageRepository;
-    private final ParticipantRepository participantRepository;
+    private final MessageDeliveryArchive messageDeliveryArchive;
 
     public InstantMessenger(
         final Receiver receiver,
-        final ConversationRepository conversationRepository,
-        final MessageRepository messageRepository,
-        final ParticipantRepository participantRepository)
+        final MessageDeliveryArchive messageDeliveryArchive)
     {
         this.receiver = receiver;
-        this.conversationRepository = conversationRepository;
-        this.messageRepository = messageRepository;
-        this.participantRepository = participantRepository;
+        this.messageDeliveryArchive = messageDeliveryArchive;
     }
 
     @Override
     public void deliverMessage(UndeliveredMessage undeliveredMessage)
     {
         final Conversation conversation =
-            conversationRepository
-            .findByConversationId(undeliveredMessage.conversationId())
-            .conversation();
+            messageDeliveryArchive
+            .conversationWithId(undeliveredMessage.conversationId());
         final Participant sender =
-            participantRepository
-            .findByParticipantId(undeliveredMessage.senderId())
-            .participant();
+            messageDeliveryArchive
+            .participantWithId(undeliveredMessage.senderId());
         final Participant recipient =
-            participantRepository
-            .findByParticipantId(undeliveredMessage.receiverId())
-            .participant();
+            messageDeliveryArchive
+            .participantWithId(undeliveredMessage.receiverId());
         final Message message = Message.withIdFromSenderToReceiverWithContent(
             UUID.randomUUID(),
             sender,
             recipient,
             undeliveredMessage.content());
-        final Message includedMessage = conversation.includeMessage(message);
-        final PersistedParticipant persistedSender =
-            participantRepository
-            .findByParticipantId(sender.id());
-        final PersistedParticipant persistedReceiver =
-            participantRepository
-            .findByParticipantId(recipient.id());
-        final PersistedMessage persistedMessage = new PersistedMessage(
-            message.id(),
-            persistedSender,
-            persistedReceiver,
-            includedMessage.content());
-        final PersistedConversation persistedConversation =
-            conversationRepository
-            .findByConversationId(undeliveredMessage.conversationId());
-        persistedConversation.getMessages().add(persistedMessage);
-        messageRepository.save(persistedMessage);
-        conversationRepository.save(persistedConversation);
-        final DeliveredMessage deliveredMessage = new DeliveredMessage(
-            conversation.id(),
-            sender.id(),
-            recipient.id(),
-            message.content());
+        conversation.includeMessage(message);
+        messageDeliveryArchive.saveMessageToConversation(message, conversation);
         if (receiver != null)
         {
-            receiver.receiveMessage(deliveredMessage);
+            receiver.receiveMessage(new DeliveredMessage(
+                conversation.id(),
+                sender.id(),
+                recipient.id(),
+                message.content()));
         }
     }
 }

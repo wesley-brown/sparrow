@@ -1,4 +1,4 @@
-package com.allegory.sparrow.persistence.messaging.sendmessage;
+package com.allegory.sparrow.persistence.messaging;
 
 import java.util.UUID;
 import org.springframework.data.repository.CrudRepository;

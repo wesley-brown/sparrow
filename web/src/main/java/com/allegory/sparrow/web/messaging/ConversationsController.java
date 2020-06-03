@@ -1,6 +1,11 @@
 package com.allegory.sparrow.web.messaging;
 
-import com.allegory.sparrow.persistence.messaging.sendmessage.*;
+import com.allegory.sparrow.persistence.messaging.ConversationRepository;
+import com.allegory.sparrow.persistence.messaging.MessageRepository;
+import com.allegory.sparrow.persistence.messaging.ParticipantRepository;
+import com.allegory.sparrow.persistence.messaging.PersistedConversation;
+import com.allegory.sparrow.persistence.messaging.PersistedMessage;
+import com.allegory.sparrow.persistence.messaging.PersistedParticipant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -25,12 +30,6 @@ final class ConversationsController {
         this.conversationRepository = conversationRepository;
         this.participantRepository = participantRepository;
         this.messageRepository = messageRepository;
-    }
-
-    @GetMapping("/api/v1/conversations")
-    Iterable<PersistedConversation> getAllConversations()
-    {
-        return conversationRepository.findAll();
     }
 
     /**

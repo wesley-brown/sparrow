@@ -13,6 +13,8 @@
 	<groupId>com.allegory.sparrow</groupId>
 	<artifactId>sparrow-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
 	<name>Sparrow Application</name>
 	<description>Classes for the Sparrow platform application.</description>
 

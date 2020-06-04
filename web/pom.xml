@@ -13,6 +13,8 @@
 	<groupId>com.allegory.sparrow</groupId>
 	<artifactId>sparrow-web-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
 	<name>Sparrow Web Server</name>
 	<description>A web server for the Sparrow platform.</description>
 

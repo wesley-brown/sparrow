@@ -56,9 +56,7 @@ public class SparrowServer
 	public Sender instantMessenger(
 		final MessageDeliveryArchive messageDeliveryArchive)
 	{
-		return new InstantMessenger(
-			null,
-			messageDeliveryArchive);
+		return new InstantMessenger(messageDeliveryArchive);
 	}
 
 }

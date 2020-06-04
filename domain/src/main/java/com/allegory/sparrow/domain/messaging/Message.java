@@ -9,7 +9,6 @@ public final class Message
 {
     private final UUID id;
     private final Participant sender;
-    private final Participant receiver;
     private final String content;
 
     /**
@@ -17,27 +16,23 @@ public final class Message
      *
      * @param id the unique identifier of the message.
      * @param sender the participant who sent the message.
-     * @param receiver the participant who received the message.
      * @param content the content of the message.
      */
-    public static Message withIdFromSenderToReceiverWithContent(
+    public static Message withIdFromSenderWithContent(
         final UUID id,
         final Participant sender,
-        final Participant receiver,
         final String content)
     {
-        return new Message(id, sender, receiver, content);
+        return new Message(id, sender, content);
     }
 
     private Message(
         final UUID id,
         final Participant sender,
-        final Participant receiver,
         final String content)
     {
         this.id = id;
         this.sender = sender;
-        this.receiver = receiver;
         this.content = content;
     }
 
@@ -49,11 +44,6 @@ public final class Message
     public Participant sender()
     {
         return sender;
-    }
-
-    public Participant receiver()
-    {
-        return receiver;
     }
 
     public String content()
@@ -86,7 +76,7 @@ public final class Message
     @Override
     public String toString()
     {
-        return "<id=" + id() + ", sender=" + sender() + ", receiver="
-            + receiver() + ", content=" + content() + ">";
+        return "<id=" + id() + ", sender=" + sender() + ", content="
+            + content() + ">";
     }
 }

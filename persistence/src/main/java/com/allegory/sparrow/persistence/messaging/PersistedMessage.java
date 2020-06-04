@@ -18,8 +18,6 @@ public final class PersistedMessage
 
     @OneToOne
     private PersistedParticipant sender;
-    @OneToOne
-    private PersistedParticipant receiver;
     private Long conversationId;
     private String content;
 
@@ -28,12 +26,10 @@ public final class PersistedMessage
     public PersistedMessage(
         final UUID messageId,
         final PersistedParticipant sender,
-        final PersistedParticipant receiver,
         final String content)
     {
         this.messageId = messageId;
         this.sender = sender;
-        this.receiver = receiver;
         this.content = content;
     }
 
@@ -52,11 +48,6 @@ public final class PersistedMessage
         return sender;
     }
 
-    public PersistedParticipant getReceiver()
-    {
-        return receiver;
-    }
-
     public String getContent() {
         return content;
     }
@@ -64,11 +55,9 @@ public final class PersistedMessage
     public Message message()
     {
         final Participant sender = getSender().participant();
-        final Participant receiver = getReceiver().participant();
-        return Message.withIdFromSenderToReceiverWithContent(
+        return Message.withIdFromSenderWithContent(
             getMessageId(),
             sender,
-            receiver,
             getContent()
         );
     }

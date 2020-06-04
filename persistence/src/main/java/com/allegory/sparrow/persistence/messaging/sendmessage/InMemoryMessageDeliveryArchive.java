@@ -57,13 +57,9 @@ public final class InMemoryMessageDeliveryArchive implements
         final PersistedParticipant sender =
             participantRepository
             .findByParticipantId(message.sender().id());
-        final PersistedParticipant receiver =
-            participantRepository
-            .findByParticipantId(message.receiver().id());
         final PersistedMessage persistedMessage = new PersistedMessage(
             message.id(),
             sender,
-            receiver,
             message.content());
         messageRepository.save(persistedMessage);
         final PersistedConversation persistedConversation =

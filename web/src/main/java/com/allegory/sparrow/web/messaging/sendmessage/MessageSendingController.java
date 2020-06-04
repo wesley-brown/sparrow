@@ -42,7 +42,6 @@ final class MessageSendingController
         final UndeliveredMessage undeliveredMessage = new UndeliveredMessage(
                 conversationId,
                 sendMessageRequest.senderId(),
-                sendMessageRequest.receiverId(),
                 sendMessageRequest.content());
         sender.deliverMessage(undeliveredMessage);
     }

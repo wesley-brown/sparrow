@@ -9,18 +9,15 @@ public class UndeliveredMessage
 {
     private final UUID conversationId;
     private final UUID senderId;
-    private final UUID receiverId;
     private final String content;
 
     public UndeliveredMessage(
         final UUID conversationId,
         final UUID senderId,
-        final UUID receiverId,
         final String content)
     {
         this.conversationId = conversationId;
         this.senderId = senderId;
-        this.receiverId = receiverId;
         this.content = content;
     }
 
@@ -32,11 +29,6 @@ public class UndeliveredMessage
     public UUID senderId()
     {
         return senderId;
-    }
-
-    public UUID receiverId()
-    {
-        return receiverId;
     }
 
     public String content()

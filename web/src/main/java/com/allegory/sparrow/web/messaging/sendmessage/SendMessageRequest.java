@@ -10,7 +10,6 @@ import java.util.UUID;
 final class SendMessageRequest
 {
     private final UUID senderId;
-    private final UUID receiverId;
     private final String content;
 
     /**
@@ -18,29 +17,20 @@ final class SendMessageRequest
      *
      * @param senderId the ID of the participant who is making the send message
      *                 request.
-     * @param receiverId the ID of the participant who is receiving the send
-     *                   message request.
      * @param content the content of the message that is being requested.
      */
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     SendMessageRequest(
         @JsonProperty("senderId") final UUID senderId,
-        @JsonProperty("receiverId") final UUID receiverId,
         @JsonProperty("content") final String content)
     {
         this.senderId = senderId;
-        this.receiverId = receiverId;
         this.content = content;
     }
 
     UUID senderId()
     {
         return senderId;
-    }
-
-    UUID receiverId()
-    {
-        return receiverId;
     }
 
     String content()

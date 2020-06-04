@@ -10,14 +10,11 @@ import java.util.UUID;
  */
 public final class InstantMessenger implements Sender
 {
-    private final Receiver receiver;
     private final MessageDeliveryArchive messageDeliveryArchive;
 
     public InstantMessenger(
-        final Receiver receiver,
         final MessageDeliveryArchive messageDeliveryArchive)
     {
-        this.receiver = receiver;
         this.messageDeliveryArchive = messageDeliveryArchive;
     }
 
@@ -30,23 +27,11 @@ public final class InstantMessenger implements Sender
         final Participant sender =
             messageDeliveryArchive
             .participantWithId(undeliveredMessage.senderId());
-        final Participant recipient =
-            messageDeliveryArchive
-            .participantWithId(undeliveredMessage.receiverId());
-        final Message message = Message.withIdFromSenderToReceiverWithContent(
+        final Message message = Message.withIdFromSenderWithContent(
             UUID.randomUUID(),
             sender,
-            recipient,
             undeliveredMessage.content());
         conversation.includeMessage(message);
         messageDeliveryArchive.saveMessageToConversation(message, conversation);
-        if (receiver != null)
-        {
-            receiver.receiveMessage(new DeliveredMessage(
-                conversation.id(),
-                sender.id(),
-                recipient.id(),
-                message.content()));
-        }
     }
 }

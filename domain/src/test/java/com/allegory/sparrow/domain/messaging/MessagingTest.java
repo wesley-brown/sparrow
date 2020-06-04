@@ -14,7 +14,7 @@ final class MessagingTest
 {
     private Participant paul;
     private Participant bob;
-    private Message paulsMessage;
+    private Message paulsMessageToBob;
     private Conversation paulAndBobsConversation;
 
     @BeforeEach
@@ -22,12 +22,10 @@ final class MessagingTest
     {
         paul = Participant.withIdAndName(UUID.randomUUID(), "Paul");
         bob = Participant.withIdAndName(UUID.randomUUID(), "Bob");
-        paulsMessage = Message.withIdFromSenderToReceiverWithContent(
+        paulsMessageToBob = Message.withIdFromSenderWithContent(
             UUID.randomUUID(),
             paul,
-            bob,
-            "How can I help you?"
-        );
+            "How can I help you?");
         paulAndBobsConversation = Conversation.withIdBetweenParticipants(
             UUID.randomUUID(),
             Arrays.asList(paul, bob));
@@ -38,7 +36,7 @@ final class MessagingTest
     {
         paul = null;
         bob = null;
-        paulsMessage = null;
+        paulsMessageToBob = null;
         paulAndBobsConversation = null;
     }
 
@@ -54,20 +52,19 @@ final class MessagingTest
     void identical_messages_are_unique()
     {
         final Message paulsDuplicateMessage =
-            Message.withIdFromSenderToReceiverWithContent(
+            Message.withIdFromSenderWithContent(
                 UUID.randomUUID(),
                 paul,
-                bob,
                 "How can I help you?");
-        assertNotEquals(paulsMessage, paulsDuplicateMessage);
+        assertNotEquals(paulsMessageToBob, paulsDuplicateMessage);
     }
 
     @Test
     void including_a_message_in_a_conversation_adds_it_to_that_conversations_messages()
     {
-        paulAndBobsConversation.includeMessage(paulsMessage);
+        paulAndBobsConversation.includeMessage(paulsMessageToBob);
         final List<Message> actualMessages = paulAndBobsConversation.messages();
-        final List<Message> expectedMessages = Arrays.asList(paulsMessage);
+        final List<Message> expectedMessages = Arrays.asList(paulsMessageToBob);
         assertEquals(expectedMessages, actualMessages);
     }
 }

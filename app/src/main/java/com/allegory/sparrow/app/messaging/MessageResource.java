@@ -9,9 +9,7 @@ import java.util.UUID;
  */
 public final class MessageResource
 {
-    private final UUID messageId;
-    private final ParticipantResource sender;
-    private final String messageContent;
+    private final Message message;
 
     /**
      * Create a new message resource from a given message.
@@ -21,36 +19,36 @@ public final class MessageResource
      */
     public static MessageResource fromMessage(final Message message)
     {
-        final ParticipantResource sender =
-            ParticipantResource.fromParticipant(message.sender());
-        return new MessageResource(message.id(), sender, message.content());
+        return new MessageResource(message);
     }
 
-    private MessageResource(
-        final UUID messageId,
-        final ParticipantResource sender,
-        final String messageContent)
+    private MessageResource(final Message message)
     {
-        this.messageId = messageId;
-        this.sender = sender;
-        this.messageContent = messageContent;
+        this.message = message;
     }
 
     @JsonProperty
-    public UUID messageId()
+    public UUID id()
     {
-        return messageId;
+        return message.id();
     }
 
-    @JsonProperty
-    public UUID senderId()
+    public ParticipantResource sender()
     {
-        return sender.id();
+        return ParticipantResource.fromParticipant(message.sender());
     }
 
     @JsonProperty
     public String content()
     {
-        return messageContent;
+        return message.content();
+    }
+
+    @Override
+    public int hashCode()
+    {
+        // Uses the Effective Java 3 Item 11 algorithm
+        final int result = message.hashCode();
+        return result;
     }
 }

@@ -44,7 +44,7 @@ public final class ParticipantResource
     public int hashCode()
     {
         // Uses the Effective Java 3 Item 11 algorithm
-        int result = participant.hashCode();
+        final int result = participant.hashCode();
         return result;
     }
 

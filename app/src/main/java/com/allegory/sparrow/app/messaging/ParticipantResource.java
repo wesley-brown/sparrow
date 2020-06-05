@@ -9,8 +9,7 @@ import java.util.UUID;
  */
 public final class ParticipantResource
 {
-    private final UUID id;
-    private final String name;
+    private final Participant participant;
 
     /**
      * Create a new participant resource from a given participant.
@@ -21,35 +20,31 @@ public final class ParticipantResource
     public static ParticipantResource fromParticipant(
         final Participant participant)
     {
-        return new ParticipantResource(participant.id(), participant.name());
+        return new ParticipantResource(participant);
     }
 
-    public ParticipantResource(
-        final UUID id,
-        final String name)
+    private ParticipantResource(final Participant participant)
     {
-        this.id = id;
-        this.name = name;
+        this.participant = participant;
     }
 
     @JsonProperty
     public UUID id()
     {
-        return id;
+        return participant.id();
     }
 
     @JsonProperty
     public String name()
     {
-        return name;
+        return participant.name();
     }
 
     @Override
     public int hashCode()
     {
         // Uses the Effective Java 3 Item 11 algorithm
-        int result = id.hashCode();
-        result = 31 * result + name.hashCode();
+        int result = participant.hashCode();
         return result;
     }
 
@@ -66,13 +61,13 @@ public final class ParticipantResource
         }
         final ParticipantResource otherResource =
             (ParticipantResource) other;
-        return otherResource.id.equals(this.id)
-            && otherResource.name.equals(this.name);
+        return otherResource.participant.equals(this.participant);
     }
 
     @Override
     public String toString()
     {
-        return "<ParticipantResource:" + " id=" + id + ", name=" + name + ">";
+        return "<ParticipantResource:" + " id=" + id() + ", name=" + name()
+            + ">";
     }
 }

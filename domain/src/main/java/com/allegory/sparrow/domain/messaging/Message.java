@@ -70,7 +70,7 @@ public final class Message
             return false;
         }
         final Message otherMessage = (Message) other;
-        return otherMessage.id == this.id;
+        return otherMessage.id.equals(this.id);
     }
 
     @Override

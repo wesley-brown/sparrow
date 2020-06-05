@@ -1,6 +1,7 @@
 package com.allegory.sparrow.app.messaging.viewallconversations;
 
 import com.allegory.sparrow.app.messaging.ConversationResource;
+import com.allegory.sparrow.app.messaging.ConversationsArchive;
 import com.allegory.sparrow.domain.messaging.Conversation;
 import java.util.ArrayList;
 import java.util.List;

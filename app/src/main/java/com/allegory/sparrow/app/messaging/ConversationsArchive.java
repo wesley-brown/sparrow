@@ -1,7 +1,8 @@
-package com.allegory.sparrow.app.messaging.viewallconversations;
+package com.allegory.sparrow.app.messaging;
 
 import com.allegory.sparrow.domain.messaging.Conversation;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * An archive of conversations.
@@ -13,4 +14,6 @@ public interface ConversationsArchive
      * @return the archived conversations.
      */
     List<Conversation> conversations();
+
+    Conversation conversationWithId(final UUID id);
 }

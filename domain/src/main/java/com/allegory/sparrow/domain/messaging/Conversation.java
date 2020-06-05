@@ -89,6 +89,28 @@ public final class Conversation
     }
 
     @Override
+    public int hashCode()
+    {
+        // Uses the Effective Java 3 Item 11 algorithm
+        return id.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other)
+    {
+        if (other == this)
+        {
+            return true;
+        }
+        if (!(other instanceof Conversation))
+        {
+            return false;
+        }
+        final Conversation otherConversation = (Conversation) other;
+        return otherConversation.id.equals(this.id);
+    }
+
+    @Override
     public String toString()
     {
         return "<id=" + id() + ", participants=" + participants()

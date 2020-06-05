@@ -1,11 +1,12 @@
 package com.allegory.sparrow.persistence.messaging.viewallconversations;
 
-import com.allegory.sparrow.app.messaging.viewallconversations.ConversationsArchive;
+import com.allegory.sparrow.app.messaging.ConversationsArchive;
 import com.allegory.sparrow.domain.messaging.Conversation;
 import com.allegory.sparrow.persistence.messaging.ConversationRepository;
 import com.allegory.sparrow.persistence.messaging.PersistedConversation;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * An in-memory archive of conversations.
@@ -38,5 +39,13 @@ public final class InMemoryConversationsArchive implements ConversationsArchive
             conversations.add(persistedConversation.conversation());
         }
         return conversations;
+    }
+
+    @Override
+    public Conversation conversationWithId(final UUID id)
+    {
+        final PersistedConversation persistedConversation =
+            conversationRepository.findByConversationId(id);
+        return persistedConversation.conversation();
     }
 }

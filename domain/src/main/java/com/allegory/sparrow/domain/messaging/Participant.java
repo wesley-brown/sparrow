@@ -57,7 +57,7 @@ public final class Participant
             return false;
         }
         final Participant participant = (Participant) other;
-        return participant.id == this.id;
+        return participant.id.equals(this.id);
     }
 
     @Override

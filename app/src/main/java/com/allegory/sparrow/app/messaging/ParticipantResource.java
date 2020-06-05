@@ -24,7 +24,7 @@ public final class ParticipantResource
         return new ParticipantResource(participant.id(), participant.name());
     }
 
-    private ParticipantResource(
+    public ParticipantResource(
         final UUID participantId,
         final String participantName)
     {
@@ -42,5 +42,14 @@ public final class ParticipantResource
     public String name()
     {
         return participantName;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        // Uses the Effective Java 3 Item 11 algorithm
+        int result = participantId.hashCode();
+        result = 31 * result + participantName.hashCode();
+        return result;
     }
 }

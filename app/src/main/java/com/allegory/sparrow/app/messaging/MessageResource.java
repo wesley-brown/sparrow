@@ -45,7 +45,7 @@ public final class MessageResource
     @JsonProperty
     public UUID senderId()
     {
-        return sender.participantId();
+        return sender.id();
     }
 
     @JsonProperty

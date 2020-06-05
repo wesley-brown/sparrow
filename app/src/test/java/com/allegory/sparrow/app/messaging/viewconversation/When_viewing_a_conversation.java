@@ -60,9 +60,10 @@ final class When_viewing_a_conversation
             final ConversationsArchive conversationsArchive =
                 new MockConversationsArchive(conversations);
             final ViewConversationRequest viewConversationRequest =
-                new ViewArchivedConversationRequest(conversationsArchive);
+                new ViewArchivedConversationRequest(
+                    conversationsArchive, bobAndAlicesConversation.id());
             final ViewConversationResponse response = viewConversationRequest
-                .conversationWithId(bobAndAlicesConversation.id());
+                .response();
             assertEquals(bobAndAlicesConversation, response.conversation());
         }
     }

@@ -11,22 +11,25 @@ public final class ViewArchivedConversationRequest implements
     ViewConversationRequest
 {
     private final ConversationsArchive conversationsArchive;
+    private final UUID conversationId;
 
     /**
      * Create a new view archived conversation request.
      *
-     * @param conversationsArchive the conversations archive to get the
-     *                             requested conversation to view from.
+     * @param conversationsArchive the conversations archive from which to get
+     *                             the requested archived conversation.
+     * @param conversationId the ID of the archived conversation to view.
      */
     public ViewArchivedConversationRequest(
-        final ConversationsArchive conversationsArchive)
+        final ConversationsArchive conversationsArchive,
+        final UUID conversationId)
     {
         this.conversationsArchive = conversationsArchive;
+        this.conversationId = conversationId;
     }
 
     @Override
-    public ViewConversationResponse conversationWithId(
-        final UUID conversationId)
+    public ViewConversationResponse response()
     {
         final Conversation conversation =
             conversationsArchive.conversationWithId(conversationId);

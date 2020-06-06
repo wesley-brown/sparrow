@@ -22,6 +22,8 @@ final class When_viewing_a_conversation
     private Conversation bobAndAlicesConversation;
     private Conversation paulAndAlicesConversation;
     private List<Conversation> conversations;
+    private ConversationsArchive conversationsArchive;
+    private ViewConversationRequest requestForBobAndAlicesConversation;
 
     @BeforeEach
     void setUp()
@@ -38,6 +40,11 @@ final class When_viewing_a_conversation
         conversations = Arrays.asList(
             bobAndAlicesConversation,
             paulAndAlicesConversation);
+        conversationsArchive = new MockConversationsArchive(conversations);
+        requestForBobAndAlicesConversation =
+            new ViewArchivedConversationRequest(
+                conversationsArchive,
+                bobAndAlicesConversation.id());
     }
 
     @AfterEach
@@ -49,6 +56,8 @@ final class When_viewing_a_conversation
         bobAndAlicesConversation = null;
         paulAndAlicesConversation = null;
         conversations = null;
+        conversationsArchive = null;
+        requestForBobAndAlicesConversation = null;
     }
 
     @Nested
@@ -57,13 +66,8 @@ final class When_viewing_a_conversation
         @Test
         void it_is_returned()
         {
-            final ConversationsArchive conversationsArchive =
-                new MockConversationsArchive(conversations);
-            final ViewConversationRequest viewConversationRequest =
-                new ViewArchivedConversationRequest(
-                    conversationsArchive, bobAndAlicesConversation.id());
-            final ViewConversationResponse response = viewConversationRequest
-                .response();
+            final ViewConversationResponse response =
+                requestForBobAndAlicesConversation.response();
             assertEquals(bobAndAlicesConversation, response.conversation());
         }
     }

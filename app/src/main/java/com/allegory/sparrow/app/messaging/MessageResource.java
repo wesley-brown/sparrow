@@ -51,4 +51,26 @@ public final class MessageResource
         final int result = message.hashCode();
         return result;
     }
+
+    @Override
+    public boolean equals(final Object other)
+    {
+        if (other == this)
+        {
+            return true;
+        }
+        if (!(other instanceof MessageResource))
+        {
+            return false;
+        }
+        final MessageResource otherResource = (MessageResource) other;
+        return otherResource.message.equals(this.message);
+    }
+
+    @Override
+    public String toString()
+    {
+        return "<MessageResource:" + " id=" + id() + ", sender=" + sender()
+            + ", content=" + content() + ">";
+    }
 }

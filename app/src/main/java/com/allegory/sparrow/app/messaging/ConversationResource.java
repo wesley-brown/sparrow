@@ -13,9 +13,7 @@ import java.util.UUID;
  */
 public final class ConversationResource
 {
-    private final UUID conversationId;
-    private final List<ParticipantResource> participants;
-    private final List<MessageResource> messages;
+    private final Conversation conversation;
 
     /**
      * Create a new conversation resource from a given conversation.
@@ -27,58 +25,50 @@ public final class ConversationResource
     public static ConversationResource fromConversation(
         final Conversation conversation)
     {
-        final List<ParticipantResource> participants = new ArrayList<>();
-        for (final Participant participant : conversation.participants())
-        {
-            participants.add(ParticipantResource.fromParticipant(participant));
-        }
-        final List<MessageResource> messages = new ArrayList<>();
-        for (final Message message : conversation.messages())
-        {
-            messages.add(MessageResource.fromMessage(message));
-        }
-        return new ConversationResource(
-            conversation.id(),
-            participants,
-            messages);
+        return new ConversationResource(conversation);
     }
 
-    private ConversationResource(
-        final UUID conversationId,
-        final List<ParticipantResource> participants,
-        final List<MessageResource> messages)
+    private ConversationResource(final Conversation conversation)
     {
-        this.conversationId = conversationId;
-        this.participants = participants;
-        this.messages = messages;
+        this.conversation = conversation;
     }
 
     @JsonProperty
-    public UUID conversationId()
+    public UUID id()
     {
-        return conversationId;
+        return conversation.id();
     }
 
     @JsonProperty
     public List<ParticipantResource> participants()
     {
-        return new ArrayList<>(participants);
+        final List<ParticipantResource> participants = new ArrayList<>();
+        for (final Participant participant : conversation.participants())
+        {
+            final ParticipantResource participantResource =
+                ParticipantResource.fromParticipant(participant);
+            participants.add(participantResource);
+        }
+        return participants;
     }
 
     @JsonProperty
     public List<MessageResource> messages()
     {
-        return new ArrayList<>(messages);
+        final List<MessageResource> messages = new ArrayList<>();
+        for (final Message message : conversation.messages())
+        {
+            final MessageResource messageResource =
+                MessageResource.fromMessage(message);
+            messages.add(messageResource);
+        }
+        return messages;
     }
 
     @Override
     public int hashCode()
     {
-        // Uses the Effective Java 3 Item 11 algorithm
-        int result = conversationId.hashCode();
-        result = 31 * result + participants.hashCode();
-        result = 31 * result + messages.hashCode();
-        return result;
+        return conversation.hashCode();
     }
 
     @Override
@@ -93,15 +83,13 @@ public final class ConversationResource
             return false;
         }
         final ConversationResource otherResource = (ConversationResource) other;
-        return otherResource.conversationId.equals(this.conversationId)
-            && otherResource.participants.equals(this.participants)
-            && otherResource.messages.equals(this.messages);
+        return otherResource.conversation.equals(this.conversation);
     }
 
     @Override
     public String toString()
     {
-        return "<ConversationResponse:" + " id=" + conversationId
-            + ", participants=" + participants + ", messages=" + messages + ">";
+        return "<ConversationResponse:" + " id=" + id() + ", participants="
+            + participants() + ", messages=" + messages() + ">";
     }
 }

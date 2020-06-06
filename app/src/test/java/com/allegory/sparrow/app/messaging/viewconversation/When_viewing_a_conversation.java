@@ -2,6 +2,7 @@ package com.allegory.sparrow.app.messaging.viewconversation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.allegory.sparrow.app.messaging.ConversationResource;
 import com.allegory.sparrow.app.messaging.MockConversationsArchive;
 import com.allegory.sparrow.app.messaging.ConversationsArchive;
 import com.allegory.sparrow.domain.messaging.Conversation;
@@ -68,7 +69,11 @@ final class When_viewing_a_conversation
         {
             final ViewConversationResponse response =
                 requestForBobAndAlicesConversation.response();
-            assertEquals(bobAndAlicesConversation, response.conversation());
+            final ConversationResource bobAndAlicesConversationResource =
+                ConversationResource.fromConversation(bobAndAlicesConversation);
+            assertEquals(
+                bobAndAlicesConversationResource,
+                response.resource());
         }
     }
 }

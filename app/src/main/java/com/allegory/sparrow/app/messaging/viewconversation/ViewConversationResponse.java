@@ -1,30 +1,31 @@
 package com.allegory.sparrow.app.messaging.viewconversation;
 
-import com.allegory.sparrow.domain.messaging.Conversation;
+import com.allegory.sparrow.app.messaging.ConversationResource;
 
 /**
  * A response for a view conversation request.
  */
 public final class ViewConversationResponse
 {
-    private final Conversation conversation;
+    private final ConversationResource conversation;
 
     /**
      * Create a new view conversation response.
      *
      * @param conversation the conversation to respond with.
      */
-    public ViewConversationResponse(final Conversation conversation)
+    public ViewConversationResponse(final ConversationResource conversation)
     {
         this.conversation = conversation;
     }
 
     /**
-     * The conversation contained within this view conversation response.
+     * The conversation resource contained within this view conversation
+     * response.
      *
-     * @return the conversation.
+     * @return the conversation resource.
      */
-    public Conversation conversation()
+    public ConversationResource resource()
     {
         return conversation;
     }

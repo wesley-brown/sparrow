@@ -1,5 +1,6 @@
 package com.allegory.sparrow.app.messaging.viewconversation;
 
+import com.allegory.sparrow.app.messaging.ConversationResource;
 import com.allegory.sparrow.app.messaging.ConversationsArchive;
 import com.allegory.sparrow.domain.messaging.Conversation;
 import java.util.UUID;
@@ -33,6 +34,8 @@ public final class ViewArchivedConversationRequest implements
     {
         final Conversation conversation =
             conversationsArchive.conversationWithId(conversationId);
-        return new ViewConversationResponse(conversation);
+        final ConversationResource resource =
+            ConversationResource.fromConversation(conversation);
+        return new ViewConversationResponse(resource);
     }
 }

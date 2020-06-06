@@ -70,4 +70,14 @@ public final class ConversationResource
     {
         return new ArrayList<>(messages);
     }
+
+    @Override
+    public int hashCode()
+    {
+        // Uses the Effective Java 3 Item 11 algorithm
+        int result = conversationId.hashCode();
+        result = 31 * result + participants.hashCode();
+        result = 31 * result + messages.hashCode();
+        return result;
+    }
 }

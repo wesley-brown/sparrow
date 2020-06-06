@@ -80,4 +80,28 @@ public final class ConversationResource
         result = 31 * result + messages.hashCode();
         return result;
     }
+
+    @Override
+    public boolean equals(final Object other)
+    {
+        if (other == this)
+        {
+            return true;
+        }
+        if (!(other instanceof ConversationResource))
+        {
+            return false;
+        }
+        final ConversationResource otherResource = (ConversationResource) other;
+        return otherResource.conversationId.equals(this.conversationId)
+            && otherResource.participants.equals(this.participants)
+            && otherResource.messages.equals(this.messages);
+    }
+
+    @Override
+    public String toString()
+    {
+        return "<ConversationResponse:" + " id=" + conversationId
+            + ", participants=" + participants + ", messages=" + messages + ">";
+    }
 }

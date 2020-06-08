@@ -6,6 +6,7 @@ import com.allegory.sparrow.app.messaging.sendmessage.Sender;
 import com.allegory.sparrow.app.messaging.viewallconversations.AllConversationsRecord;
 import com.allegory.sparrow.app.messaging.ConversationsArchive;
 import com.allegory.sparrow.app.messaging.viewallconversations.ConversationsRecord;
+import com.allegory.sparrow.app.messaging.viewconversation.ConversationViewer;
 import com.allegory.sparrow.persistence.messaging.ConversationRepository;
 import com.allegory.sparrow.persistence.messaging.sendmessage.InMemoryMessageDeliveryArchive;
 import com.allegory.sparrow.persistence.messaging.MessageRepository;
@@ -57,6 +58,13 @@ public class SparrowServer
 		final MessageDeliveryArchive messageDeliveryArchive)
 	{
 		return new InstantMessenger(messageDeliveryArchive);
+	}
+
+	@Bean
+	public ConversationViewer conversationViewer(
+		final ConversationsArchive conversationsArchive)
+	{
+		return new ConversationViewer(conversationsArchive);
 	}
 
 }

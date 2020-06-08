@@ -33,18 +33,6 @@ final class ConversationsController {
     }
 
     /**
-     * Get a conversation by a given ID.
-     *
-     * @param id the unique ID of the conversation.
-     * @return the conversation with the given ID.
-     */
-    @GetMapping("/api/v1/conversations/{id}")
-    PersistedConversation getConversationById(@PathVariable final long id)
-    {
-        return conversationRepository.findById(id).get();
-    }
-
-    /**
      * Post a new conversation.
      *
      * @param conversation the conversation to post.

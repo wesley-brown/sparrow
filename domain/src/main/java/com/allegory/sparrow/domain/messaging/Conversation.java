@@ -77,15 +77,18 @@ public final class Conversation
     }
 
     /**
-     * Include a given message in this conversation.
+     * Create a new conversation with this conversation's current messages and
+     * a new given message.
      *
      * @param message the message to include.
-     * @return the included message.
+     * @return a new conversation with this conversation's messages plus the
+     *         given message.
      */
-    public Message includeMessage(final Message message)
+    public Conversation includeMessage(final Message message)
     {
-        messages.add(message);
-        return message;
+        final List<Message> newMessages = messages();
+        newMessages.add(message);
+        return new Conversation(id(), participants(), newMessages);
     }
 
     @Override

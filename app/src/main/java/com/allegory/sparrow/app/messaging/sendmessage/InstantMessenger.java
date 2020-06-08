@@ -21,17 +21,13 @@ public final class InstantMessenger implements Sender
     @Override
     public void deliverMessage(UndeliveredMessage undeliveredMessage)
     {
-        final Conversation conversation =
-            messageDeliveryArchive
-            .conversationWithId(undeliveredMessage.conversationId());
-        final Participant sender =
-            messageDeliveryArchive
-            .participantWithId(undeliveredMessage.senderId());
+        Conversation conversation = messageDeliveryArchive.conversationWithId(
+            undeliveredMessage.conversationId());
+        final Participant sender = messageDeliveryArchive.participantWithId(
+            undeliveredMessage.senderId());
         final Message message = Message.withIdFromSenderWithContent(
-            UUID.randomUUID(),
-            sender,
-            undeliveredMessage.content());
-        conversation.includeMessage(message);
+            UUID.randomUUID(), sender, undeliveredMessage.content());
+        conversation = conversation.includeMessage(message);
         messageDeliveryArchive.saveMessageToConversation(message, conversation);
     }
 }

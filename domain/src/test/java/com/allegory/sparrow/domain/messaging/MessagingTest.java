@@ -29,14 +29,6 @@ final class MessagingTest
     }
 
     @Test
-    void identical_participants_are_unique()
-    {
-        final Participant paulsClone =
-            Participant.withIdAndName(UUID.randomUUID(), "Paul");
-        assertNotEquals(paul, paulsClone);
-    }
-
-    @Test
     void identical_messages_are_unique()
     {
         final Message paulsDuplicateMessage =

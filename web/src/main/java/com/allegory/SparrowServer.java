@@ -3,9 +3,8 @@ package com.allegory;
 import com.allegory.sparrow.app.messaging.sendmessage.InstantMessenger;
 import com.allegory.sparrow.app.messaging.sendmessage.MessageDeliveryArchive;
 import com.allegory.sparrow.app.messaging.sendmessage.Sender;
-import com.allegory.sparrow.app.messaging.viewallconversations.AllConversationsRecord;
 import com.allegory.sparrow.app.messaging.ConversationsArchive;
-import com.allegory.sparrow.app.messaging.viewallconversations.ConversationsRecord;
+import com.allegory.sparrow.app.messaging.viewallconversations.AllConversationsViewer;
 import com.allegory.sparrow.app.messaging.viewconversation.ConversationViewer;
 import com.allegory.sparrow.persistence.messaging.ConversationRepository;
 import com.allegory.sparrow.persistence.messaging.sendmessage.InMemoryMessageDeliveryArchive;
@@ -35,13 +34,6 @@ public class SparrowServer
 	}
 
 	@Bean
-	public ConversationsRecord conversationsRecord(
-		final ConversationsArchive conversationsArchive)
-	{
-		return new AllConversationsRecord(conversationsArchive);
-	}
-
-	@Bean
 	public MessageDeliveryArchive inMemoryMessageDeliveryArchive(
 		final ConversationRepository conversationRepository,
 		final MessageRepository messageRepository,
@@ -65,6 +57,13 @@ public class SparrowServer
 		final ConversationsArchive conversationsArchive)
 	{
 		return new ConversationViewer(conversationsArchive);
+	}
+
+	@Bean
+	public AllConversationsViewer allConversationsViewer(
+		final ConversationsArchive conversationsArchive)
+	{
+		return new AllConversationsViewer(conversationsArchive);
 	}
 
 }

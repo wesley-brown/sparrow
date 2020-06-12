@@ -1,11 +1,9 @@
 package com.allegory.sparrow.web.messaging.viewallconversations;
 
-import com.allegory.sparrow.app.messaging.ConversationResource;
-import com.allegory.sparrow.app.messaging.viewallconversations.ConversationsRecord;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.allegory.sparrow.app.messaging.viewallconversations.AllConversationsViewer;
+import com.allegory.sparrow.app.messaging.viewallconversations.ViewAllConversationsRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.List;
 
 /**
  * A REST controller for the view all conversations endpoint.
@@ -13,17 +11,17 @@ import java.util.List;
 @RestController
 final class ViewAllConversationsController
 {
-    private final ConversationsRecord conversationsRecord;
+    private final AllConversationsViewer allConversationsViewer;
 
     /**
      * Create a new view all conversations controller.
-     * @param conversationsRecord the record of conversations to use.
+     * @param allConversationsViewer the all conversations viewer to create
+     *                               view all conversation requests from.
      */
-    @Autowired
     ViewAllConversationsController(
-        final ConversationsRecord conversationsRecord)
+        final AllConversationsViewer allConversationsViewer)
     {
-        this.conversationsRecord = conversationsRecord;
+        this.allConversationsViewer = allConversationsViewer;
     }
 
     /**
@@ -32,8 +30,13 @@ final class ViewAllConversationsController
      * @return all conversations.
      */
     @GetMapping("api/v1/conversations")
-    List<ConversationResource> viewAllConversations()
+    ViewAllConversationsWebResponse viewAllConversations()
     {
-        return conversationsRecord.conversations();
+        final ViewAllConversationsRequest request =
+            allConversationsViewer.requestToViewAllConversations();
+        final ViewAllConversationsWebResponse response =
+            ViewAllConversationsWebResponse.fromViewAllConversationsResponse(
+                request.response());
+        return response;
     }
 }
